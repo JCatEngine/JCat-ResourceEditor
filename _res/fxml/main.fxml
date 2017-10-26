@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane fx:controller="Controller.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/darkTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu mnemonicParsing="false" text="文件">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="导入资源文件" />
+                        <MenuItem mnemonicParsing="false" text="导出资源文件">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#press_ImportImage" text="导入图片到库" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="编辑">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="设置">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="帮助">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="首选项" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <GridPane maxHeight="1.7976931348623157E308">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.79998779296875" minWidth="10.0" prefWidth="392.79998779296875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="207.20001220703125" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

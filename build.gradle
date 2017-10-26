@@ -1,0 +1,57 @@
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'java-library'
+
+def mclass= "Main.Entry"
+version '1.0'
+sourceCompatibility = 1.8
+
+mainClassName = mclass
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+
+	// https://mvnrepository.com/artifact/org.json/json
+    compile group: 'org.json', name: 'json', version: '20160810'
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+
+
+}
+
+jar {
+    doFirst {
+        manifest {
+            attributes(
+                    'Class-Path': configurations.runtimeClasspath.files.collect { "lib/"+it.getName() }.join(' '),
+                    'Main-Class': mclass)
+
+        }
+    }
+}
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+task copyJar(type: Copy) {
+    from configurations.runtime
+    into('build/libs/lib')
+
+}
+task copyData(type: Copy) {
+    from ('_res')
+    into('build/libs/_res')
+}
+
+jar{
+    dependsOn copyJar
+    dependsOn copyData
+}
+
