@@ -1,20 +1,26 @@
 package Controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.tools.Tool;
 
 import Bean.ResourceData;
 import Cell.LibraryCell;
 import Parser.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -23,16 +29,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
 
 public class MainController extends BaseController implements Initializable{
 
 	public static Stage stage;
 	@FXML ListView<ResourceData> libraryLV;
 	@FXML ImageView selectIV;
+	@FXML VBox leftPane;
+	private InspectorController inspectorController;
 
 
 
@@ -49,6 +56,27 @@ public class MainController extends BaseController implements Initializable{
 
 	private void initView() {
 		initList();
+		initInspector();
+	}
+
+	private void initInspector() {
+		
+		FXMLLoader loader=new FXMLLoader();
+		try {
+			loader.setLocation(new File("_res/fxml/pane_inspector.fxml").toURL());
+			Parent root= loader.load();
+			leftPane.getChildren().add(root);
+			inspectorController=loader.getController();
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	private void initList() {
@@ -66,7 +94,11 @@ public class MainController extends BaseController implements Initializable{
 				//if a image,show image
 				if(newValue.type==ResourceType.TEXTURE)
 				{
+					//set image
 					selectIV.setImage((Image) newValue.data);
+					//update inspector
+					inspectorController.update(newValue);
+					
 				}
 				//if a movieclip,play anime
 			}

@@ -22,6 +22,15 @@ public class ResourceData {
 		return "ResourceData [" + (name != null ? "name=" + name + ", " : "")
 				+ (type != null ? "type=" + type + ", " : "") + (data != null ? "data=" + data : "") + "]";
 	}
+	public String getTypeName() {
+		String name="";
+		if(type==ResourceType.TEXTURE)
+		{
+			name="图片";
+		}
+		
+		return name;
+	}
 
 	
 	
