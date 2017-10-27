@@ -46,7 +46,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="hqpLB" prefWidth="50.0" text="1">
+                                    <TextField fx:id="hqpLB" prefWidth="50.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -60,7 +60,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="lqpLB" prefWidth="50.0" text="1">
+                                    <TextField fx:id="lqpLB" prefWidth="50.0">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -98,7 +98,7 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <Button fx:id="qbButton" mnemonicParsing="false" text="生成切片" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button fx:id="qbButton" mnemonicParsing="false" onAction="#press_qiepian" text="生成切片" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

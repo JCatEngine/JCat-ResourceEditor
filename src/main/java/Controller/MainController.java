@@ -60,6 +60,7 @@ public class MainController extends BaseController implements Initializable{
 		getLibrary().importImage(new File("A:\\java\\JavaProject\\2017.10.26JCat-ResourceEditor\\_res\\img\\icon_image.png"));
 		getLibrary().importImage(new File("A:\\java\\JavaProject\\2017.10.26JCat-ResourceEditor\\_res\\img\\icon_movieclip.png"));
 		getLibrary().importImage(new File("A:\\java\\JavaProject\\2017.10.26JCat-ResourceEditor\\_res\\img\\icon_music.png"));
+		getLibrary().importImage(new File("A:\\java\\JavaProject\\2017.10.26JCat-ResourceEditor\\_res\\img\\move.png"));
 
 		
 	}
@@ -77,6 +78,8 @@ public class MainController extends BaseController implements Initializable{
 			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
 			this.imageOpControllerPane= loader.load();
 			this.imageOpController=loader.getController();
+			this.imageOpController.setMainController(this);
+			this.imageOpController.init();
 			
 //			FXMLLoader loader=new FXMLLoader();
 //			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
@@ -242,5 +245,11 @@ public class MainController extends BaseController implements Initializable{
 		}
 		
 		return files;
+	}
+
+	public ResourceData getSelectedItem() {
+		// TODO Auto-generated method stub
+		return libraryLV.getSelectionModel().getSelectedItem();
+		
 	}
 }
