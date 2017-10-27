@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane fx:controller="Controller.MainController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/darkTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" stylesheets="@../css/darkTheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -33,6 +38,13 @@
                         <MenuItem mnemonicParsing="false" text="Delete" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="对象">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="创建贴图" />
+                      <MenuItem mnemonicParsing="false" text="创建动画" />
+                        <MenuItem mnemonicParsing="false" text="创建粒子效果" />
+                    </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="设置">
                      <items>
                         <MenuItem mnemonicParsing="false" text="About" />
@@ -45,16 +57,37 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <GridPane maxHeight="1.7976931348623157E308">
+            <GridPane maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="392.79998779296875" minWidth="10.0" prefWidth="392.79998779296875" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.20001220703125" minWidth="10.0" prefWidth="207.20001220703125" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="10.0" prefWidth="170.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" />
+                  <VBox maxHeight="1.7976931348623157E308" GridPane.columnIndex="1">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: grey;">
+                           <children>
+                              <ImageView fx:id="selectIV" fitHeight="170.0" fitWidth="170.0" pickOnBounds="true" />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="搜索:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <TextField prefHeight="26.0" prefWidth="118.0" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
+                        <ListView fx:id="libraryLV" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                     </children></VBox>
                </children>
             </GridPane>
          </children>

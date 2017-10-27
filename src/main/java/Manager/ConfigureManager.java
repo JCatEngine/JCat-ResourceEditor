@@ -1,11 +1,11 @@
 package Manager;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.json.JSONObject;
 
 import Main.Config;
-import Parser.Library;
 import Tool.FileTool;
 
 public class ConfigureManager {
@@ -19,6 +19,17 @@ public class ConfigureManager {
 			instance=new ConfigureManager();
 		}
 		return instance;
+		
+	}
+	
+	static
+	{
+		File file=new File("data");
+		if(!file.exists())
+		{
+			file.mkdirs();
+		}
+		
 		
 	}
 	

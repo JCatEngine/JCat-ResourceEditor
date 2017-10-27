@@ -1,6 +1,7 @@
 package Controller;
 
 import Manager.ConfigureManager;
+import Manager.ImageManager;
 import Parser.Library;
 
 public class BaseController {
@@ -15,6 +16,13 @@ public class BaseController {
 	{
 		
 		return ConfigureManager.getInstance();
+				
+	}
+	
+	protected ImageManager getImageManager()
+	{
+		
+		return ImageManager.getInstance();
 				
 	}
 }

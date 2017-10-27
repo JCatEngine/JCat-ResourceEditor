@@ -15,13 +15,13 @@ public class Entry extends Application{
 	
 	public static void main(String[] args) throws IOException {
 		launch(args);
-		
-		
+
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
 
+		
 		FXMLLoader loader=new FXMLLoader();
 		loader.setLocation(new File("_res/fxml/main.fxml").toURL());
 		Parent root= loader.load();
