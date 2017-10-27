@@ -4,9 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Bean.ResourceData;
-import Parser.Library;
 import Tool.AlertTool;
-import Tool.ImageTool;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -75,7 +73,7 @@ public class ImageOpController extends BottomBaseController implements Initializ
 		try {
 			int x=Integer.parseInt(hqpLB.getText());
 			int y=Integer.parseInt(lqpLB.getText());
-			getMainController().reDrawCanvasSlice(x,y);
+			getMainController().redrawCanvasSlice(x,y);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

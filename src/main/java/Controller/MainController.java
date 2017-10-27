@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
 
 import Bean.ResourceData;
 import Cell.LibraryCell;
+import JavaFxPlus.ViewHelper.CanvasHelper;
+import JavaFxPlus.ViewHelper.ImageViewHelper;
+import JavaFxPlus.ViewHelper.ListViewHelper;
 import Parser.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -45,17 +49,20 @@ public class MainController extends BaseController implements Initializable{
 	@FXML ImageView selectIV;
 	@FXML VBox leftPane;
 	@FXML VBox bottomPane;
-	
+	@FXML VBox centerPane;
+	@FXML ImageView showIV;
+	@FXML Canvas canvas;
 	
 	public static Stage stage;
 	
 	private InspectorController inspectorController;
 	private ImageOpController imageOpController;
 	private Parent imageOpControllerPane;
-	@FXML VBox centerPane;
-	@FXML ImageView showIV;
-	@FXML Canvas canvas;
+
 	private GraphicsContext graphics;
+	private CanvasHelper canvasHelper;
+	private ImageViewHelper imageViewHelper;
+	private ListViewHelper<ResourceData> libraryListHelper;
 	
 
 
@@ -78,15 +85,16 @@ public class MainController extends BaseController implements Initializable{
 		initBottomPane();
 		initCanvas();
 		
+		this.imageViewHelper=new ImageViewHelper(showIV);
+		
 	}
 
 	private void initCanvas() {
-		graphics=canvas.getGraphicsContext2D();
-		graphics.setLineWidth(5);
-		graphics.setStroke(Color.GREEN);
-		graphics.setFill(Color.GREEN);
 		
-		
+		this.canvasHelper=new CanvasHelper(canvas);
+		graphics=canvasHelper.getGraphicsContext2D();
+		canvasHelper.setLineWidth(5);
+		canvasHelper.setColor(Color.GREEN);
 	}
 
 	private void initBottomPane() {
@@ -142,11 +150,13 @@ public class MainController extends BaseController implements Initializable{
 	}
 
 	private void initList() {
+		
 		libraryLV.setItems(getLibrary().getResources());
 		libraryLV.setEditable(true);
 		//set select multiple
 		libraryLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		libraryLV.setCellFactory(param -> new LibraryCell());
+		this.libraryListHelper=new ListViewHelper();
+		libraryLV.setCellFactory(param -> new LibraryCell(libraryListHelper));
 		libraryLV.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ResourceData>() {
 
 			@Override
@@ -193,13 +203,20 @@ public class MainController extends BaseController implements Initializable{
 		MenuItem menuItem=new MenuItem("删除");
 		menuItem.setOnAction(event -> removeCurrentSelectedItems());
 		MenuItem menuItem2=new MenuItem("重命名");
-		menuItem.setOnAction(event -> removeCurrentSelectedItems());
+		menuItem2.setOnAction(event -> renameCurrentSelectedItems());
 		MenuItem menuItem3=new MenuItem("导入图片");
-		menuItem.setOnAction(event -> removeCurrentSelectedItems());
+		menuItem3.setOnAction(event -> removeCurrentSelectedItems());
+		MenuItem menuItem4=new MenuItem("导出图片");
+		menuItem4.setOnAction(event -> removeCurrentSelectedItems());
 		
-		contextMenuCanvas.getItems().addAll(menuItem,menuItem2,menuItem3);
+		contextMenuCanvas.getItems().addAll(menuItem,menuItem2,menuItem3,menuItem4);
 		libraryLV.setContextMenu(contextMenuCanvas);
 		
+	}
+
+	private void renameCurrentSelectedItems() {
+		LibraryCell cell=(LibraryCell) libraryListHelper.getCell(libraryLV.getSelectionModel().getSelectedIndex());
+		cell.startEdit();
 	}
 
 	protected void updateCenterPane() {
@@ -208,8 +225,9 @@ public class MainController extends BaseController implements Initializable{
 		{
 			//set the width and height to fit the width and height of image
 			Image image=(Image) data.data;
-			showIV.setFitWidth(image.getWidth());
-			showIV.setFitHeight(image.getHeight());
+			canvasHelper.resizeToImage(image);
+			imageViewHelper.resizeToImage(image);
+			
 			showIV.setImage((Image) data.data);
 		}
 		
@@ -228,7 +246,7 @@ public class MainController extends BaseController implements Initializable{
 	}
 
 	protected void removeCurrentSelectedItems() {
-		// TODO Auto-generated method stub
+		getLibrary().removeAll(libraryLV.getSelectionModel().getSelectedItems());
 		
 	}
 
@@ -290,25 +308,15 @@ public class MainController extends BaseController implements Initializable{
 		return canvas;
 	}
 
-	public void reDrawCanvasSlice(int x, int y) {
+	public void redrawCanvasSlice(int x, int y) {
 		
 		if(getSelectedItem()!=null)
 		{
 			Image image=(Image) getSelectedItem().data;
 		
-		
 			//graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			int partWidth=(int) (image.getWidth()/x);
-			int partHeight=(int) (image.getHeight()/y);
+			canvasHelper.drawGridLine(x,y);
 			
-			for(int i=0;i<x+1;i++)
-			{
-				graphics.strokeLine(i*partWidth, 0, i*partWidth, image.getHeight());
-			}
-			for(int i=0;i<y+1;i++)
-			{
-				graphics.strokeLine(0,i*partHeight,image.getWidth(),i*partHeight);
-			}
 		}
 	}
 	

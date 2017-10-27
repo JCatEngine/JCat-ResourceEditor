@@ -66,8 +66,9 @@ public class Library {
 	 * @param selectedItems
 	 */
 	public void removeAll(ObservableList<ResourceData> selectedItems) {
-		for (ResourceData resourceData : selectedItems) {
-			remove(resourceData);
+		while(selectedItems.size()>0)
+		{
+			remove(selectedItems.get(0));
 		}
 		
 	}

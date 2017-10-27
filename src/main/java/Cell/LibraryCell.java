@@ -2,6 +2,8 @@ package Cell;
 
 
 import Bean.ResourceData;
+import JavaFxPlus.ViewHelper.GetAbleListCell;
+import JavaFxPlus.ViewHelper.ListViewHelper;
 import Manager.ImageManager;
 import Parser.Library;
 import Tool.AlertTool;
@@ -12,14 +14,17 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-public class LibraryCell extends ListCell<ResourceData>{
+public class LibraryCell extends GetAbleListCell<ResourceData>{
 
 	
+	public LibraryCell(ListViewHelper libraryListHelper) {
+		super(libraryListHelper);
+	}
+
 	@FXML
 	private ImageView typeLV;
 	@FXML
@@ -41,6 +46,8 @@ public class LibraryCell extends ListCell<ResourceData>{
 		}
 	};
 	
+	
+
 	@Override
 	protected void updateItem(ResourceData item, boolean empty) {
 		super.updateItem(item, empty);
@@ -73,6 +80,7 @@ public class LibraryCell extends ListCell<ResourceData>{
 				typeLV.setImage(ImageManager.getInstance().getIcon(item.getImageName()));
 				setGraphic(hBox);
 			}
+			
 			
 			
 		}
