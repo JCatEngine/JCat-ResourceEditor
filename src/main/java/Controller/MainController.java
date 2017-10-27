@@ -7,8 +7,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.tools.Tool;
-
 import Bean.ResourceData;
 import Cell.LibraryCell;
 import Parser.ResourceType;
@@ -20,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
@@ -29,17 +26,30 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.layout.VBox;
 
+/**
+ * deal with the main command,and load sub pane
+ * @author Administrator
+ *
+ */
 public class MainController extends BaseController implements Initializable{
 
-	public static Stage stage;
+	
 	@FXML ListView<ResourceData> libraryLV;
 	@FXML ImageView selectIV;
 	@FXML VBox leftPane;
+	@FXML VBox bottomPane;
+	
+	
+	public static Stage stage;
+	
 	private InspectorController inspectorController;
+	private ImageOpController imageOpController;
+	private Parent imageOpControllerPane;
+	
 
 
 
@@ -57,6 +67,37 @@ public class MainController extends BaseController implements Initializable{
 	private void initView() {
 		initList();
 		initInspector();
+		initBottomPane();
+	}
+
+	private void initBottomPane() {
+		//reload bottom pane
+		try {
+			FXMLLoader loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
+			this.imageOpControllerPane= loader.load();
+			this.imageOpController=loader.getController();
+			
+//			FXMLLoader loader=new FXMLLoader();
+//			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
+//			Parent root= loader.load();
+//			this.imageOpController=loader.getController();
+//			
+//			FXMLLoader loader=new FXMLLoader();
+//			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
+//			Parent root= loader.load();
+//			this.imageOpController=loader.getController();
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 	private void initInspector() {
@@ -98,9 +139,17 @@ public class MainController extends BaseController implements Initializable{
 					selectIV.setImage((Image) newValue.data);
 					//update inspector
 					inspectorController.update(newValue);
+					//update bottom pane
+					updateBottomPane();
 					
 				}
 				//if a movieclip,play anime
+				else
+				{
+					//remove
+					updateBottomPane();
+				}
+				
 			}
 		});
 		//when delete press,delete selected items
@@ -127,6 +176,18 @@ public class MainController extends BaseController implements Initializable{
 		
 		contextMenuCanvas.getItems().addAll(menuItem,menuItem2,menuItem3);
 		libraryLV.setContextMenu(contextMenuCanvas);
+		
+	}
+
+	protected void updateBottomPane() {
+		bottomPane.getChildren().clear();
+		ResourceData data=libraryLV.getSelectionModel().getSelectedItem();
+		if(data.type==ResourceType.TEXTURE)
+		{
+			bottomPane.getChildren().add(imageOpControllerPane);
+		}
+		
+		
 		
 	}
 

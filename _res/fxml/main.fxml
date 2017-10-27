@@ -91,11 +91,16 @@
                         <ListView fx:id="libraryLV" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
                      </children></VBox>
                   <VBox fx:id="leftPane" />
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-                    </content>
-                  </ScrollPane>
+                  <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                          </content>
+                        </ScrollPane>
+                        <VBox fx:id="bottomPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="200.0" />
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
          </children>

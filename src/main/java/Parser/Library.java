@@ -32,6 +32,7 @@ public class Library {
 	public void importImage(File file) {
 		
 		try {
+			@SuppressWarnings("deprecation")
 			Image image=new Image(file.toURL().toString());
 			ResourceData resourceData=new ResourceData();
 			resourceData.name=file.getName();
