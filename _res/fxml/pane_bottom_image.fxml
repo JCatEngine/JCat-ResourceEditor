@@ -46,7 +46,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="hqpLB" prefWidth="50.0">
+                                    <TextField fx:id="hqpLB" prefWidth="50.0" text="1">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -60,7 +60,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="lqpLB" prefWidth="50.0">
+                                    <TextField fx:id="lqpLB" prefWidth="50.0" text="1">
                                        <font>
                                           <Font size="14.0" />
                                        </font>

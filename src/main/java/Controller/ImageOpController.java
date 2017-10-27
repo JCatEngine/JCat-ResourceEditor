@@ -41,8 +41,9 @@ public class ImageOpController extends BottomBaseController implements Initializ
 				try {
 					int value=Integer.parseInt(newValue);
 					widthLB.setText(image.getWidth()/value+"");
+					redrawCanvas();
 				} catch (Exception e) {
-					
+					e.printStackTrace();
 				}
 				
 			}
@@ -56,8 +57,9 @@ public class ImageOpController extends BottomBaseController implements Initializ
 				try {
 					int value=Integer.parseInt(newValue);
 					heightLB.setText(image.getHeight()/value+"");
+					redrawCanvas();
 				} catch (Exception e) {
-					
+					e.printStackTrace();
 				}
 				
 			}
@@ -66,6 +68,20 @@ public class ImageOpController extends BottomBaseController implements Initializ
 	
 		
 		
+	}
+
+	protected void redrawCanvas() {
+		
+		try {
+			int x=Integer.parseInt(hqpLB.getText());
+			int y=Integer.parseInt(lqpLB.getText());
+			getMainController().reDrawCanvasSlice(x,y);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+			
+	
 	}
 
 	@Override

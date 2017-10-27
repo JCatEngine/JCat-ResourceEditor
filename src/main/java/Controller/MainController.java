@@ -27,8 +27,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 
 /**
  * deal with the main command,and load sub pane
@@ -49,6 +52,10 @@ public class MainController extends BaseController implements Initializable{
 	private InspectorController inspectorController;
 	private ImageOpController imageOpController;
 	private Parent imageOpControllerPane;
+	@FXML VBox centerPane;
+	@FXML ImageView showIV;
+	@FXML Canvas canvas;
+	private GraphicsContext graphics;
 	
 
 
@@ -69,6 +76,17 @@ public class MainController extends BaseController implements Initializable{
 		initList();
 		initInspector();
 		initBottomPane();
+		initCanvas();
+		
+	}
+
+	private void initCanvas() {
+		graphics=canvas.getGraphicsContext2D();
+		graphics.setLineWidth(5);
+		graphics.setStroke(Color.GREEN);
+		graphics.setFill(Color.GREEN);
+		
+		
 	}
 
 	private void initBottomPane() {
@@ -144,6 +162,8 @@ public class MainController extends BaseController implements Initializable{
 					inspectorController.update(newValue);
 					//update bottom pane
 					updateBottomPane();
+					//update center pane
+					updateCenterPane();
 					
 				}
 				//if a movieclip,play anime
@@ -179,6 +199,19 @@ public class MainController extends BaseController implements Initializable{
 		
 		contextMenuCanvas.getItems().addAll(menuItem,menuItem2,menuItem3);
 		libraryLV.setContextMenu(contextMenuCanvas);
+		
+	}
+
+	protected void updateCenterPane() {
+		ResourceData data=libraryLV.getSelectionModel().getSelectedItem();
+		if(data.type==ResourceType.TEXTURE)
+		{
+			//set the width and height to fit the width and height of image
+			Image image=(Image) data.data;
+			showIV.setFitWidth(image.getWidth());
+			showIV.setFitHeight(image.getHeight());
+			showIV.setImage((Image) data.data);
+		}
 		
 	}
 
@@ -252,4 +285,33 @@ public class MainController extends BaseController implements Initializable{
 		return libraryLV.getSelectionModel().getSelectedItem();
 		
 	}
+
+	public Canvas getCanvas() {
+		return canvas;
+	}
+
+	public void reDrawCanvasSlice(int x, int y) {
+		
+		if(getSelectedItem()!=null)
+		{
+			Image image=(Image) getSelectedItem().data;
+		
+		
+			//graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			int partWidth=(int) (image.getWidth()/x);
+			int partHeight=(int) (image.getHeight()/y);
+			
+			for(int i=0;i<x+1;i++)
+			{
+				graphics.strokeLine(i*partWidth, 0, i*partWidth, image.getHeight());
+			}
+			for(int i=0;i<y+1;i++)
+			{
+				graphics.strokeLine(0,i*partHeight,image.getWidth(),i*partHeight);
+			}
+		}
+	}
+	
+	
+	
 }
