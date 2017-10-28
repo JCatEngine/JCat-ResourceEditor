@@ -72,7 +72,6 @@ public class FileChooserTool {
 		return file;
 	}
 
-	
 	/**
 	 * 
 	 * @return
@@ -82,7 +81,6 @@ public class FileChooserTool {
 		return ConfigureManager.getInstance();
 	}
 
-	
 	/**
 	 * 
 	 * @param title
@@ -104,6 +102,52 @@ public class FileChooserTool {
 		if (file != null) {
 			if (!file.isDirectory()) {
 				getConfigureManager().setLastChoosePath(file.getParentFile());
+			}
+		}
+
+		return file;
+	}
+
+	/**
+	 * 
+	 * @param title
+	 * @param arrayList
+	 * @param stage
+	 * @return
+	 */
+	public static File openDialog(String title, ArrayList<ExtensionFilter> arrayList, Stage stage, File path) {
+
+		FileChooser fileChooser = _fileChooser(title, arrayList);
+
+		// set init directory
+		if (getConfigureManager().getLastChoosePath() != null) {
+			fileChooser.setInitialDirectory(getConfigureManager().getLastChoosePath());
+		}
+		File file = fileChooser.showOpenDialog(stage);
+
+		// save init directory
+		if (file != null) {
+			if (!file.isDirectory()) {
+				getConfigureManager().setLastChoosePath(file.getParentFile());
+			}
+		}
+
+		return file;
+	}
+
+	public static File openDialogUseSavePath(String title, ArrayList<ExtensionFilter> arrayList, Stage stage) {
+		FileChooser fileChooser = _fileChooser(title, arrayList);
+
+		// set init directory
+		if (getConfigureManager().getLastSavePath() != null) {
+			fileChooser.setInitialDirectory(getConfigureManager().getLastSavePath());
+		}
+		File file = fileChooser.showOpenDialog(stage);
+
+		// save init directory
+		if (file != null) {
+			if (!file.isDirectory()) {
+				getConfigureManager().setLastSavePath(file.getParentFile());
 			}
 		}
 

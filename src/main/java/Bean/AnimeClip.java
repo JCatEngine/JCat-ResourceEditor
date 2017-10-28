@@ -1,5 +1,9 @@
 package Bean;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.Comparator;
 
@@ -8,12 +12,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
 /**
- * change texture 
+ * change texture
+ * 
  * @author Administrator
  *
  */
-public class AnimeClip implements Serializable{
-	
+public class AnimeClip implements Externalizable {
+
 	/**
 	 * name of the anime
 	 */
@@ -29,130 +34,105 @@ public class AnimeClip implements Serializable{
 	/**
 	 * currentframe
 	 */
-	protected int currentFrame=-1;
+	protected int currentFrame = -1;
 
-
-	public class Frame implements Serializable{
-
-		public int index;
-		public Image texture;
-
-		public Frame(int index, Image texture) {
-			this.index = index;
-			this.texture = texture;
-			// TODO Auto-generated constructor stub
-		}
-
+	public AnimeClip() {
+		// TODO Auto-generated constructor stub
 	}
 
-	
 	/**
 	 * frames
 	 */
-	private ObservableList<Frame> frames=FXCollections.observableArrayList();
-	
-	
+	private ObservableList<Frame> frames = FXCollections.observableArrayList();
+
 	/**
 	 * insert one frame,the first frame must set index 1!
+	 * 
 	 * @param index
 	 * @param texture
 	 */
-	public void insertFrame(int index,Image texture)
-	{
-		if(currentFrame==-1)
-		{
-			//if add first frame,then init current frame
-			currentFrame=1;
+	public void insertFrame(int index, Image texture) {
+		if (currentFrame == -1) {
+			// if add first frame,then init current frame
+			currentFrame = 1;
 		}
-		
-		if(frames.size()==0&&index!=1)
-		{
+
+		if (frames.size() == 0 && index != 1) {
 			throw new RuntimeException("the first inserted frame must set index 1");
 		}
-		Frame frame=new Frame(index,texture);
+		Frame frame = new Frame(this, index, texture);
 		frames.add(frame);
-		frames.sort(Comparator.comparing(a->frame.index));
+		frames.sort(Comparator.comparing(a -> frame.index));
 	}
-	
+
 	/**
 	 * calculate the current texture based on the index
+	 * 
 	 * @param currentFrame
 	 * @return
 	 */
-		public Image getTexture()
-		{
-			if(currentFrame<0)
-			{
-				return null;
-			}
-			
-			//just return first texture
-			if(currentFrame==1)
-			{
-				return frames.get(0).texture;
-			}
-			//just return last
-			else if(currentFrame>=frames.get(frames.size()-1).index)
-			{
-				return frames.get(frames.size()-1).texture;
-			}
-			//in the center area
-			else
-			{
-				
-				for(int i=0;i<frames.size();i++)
-				{
-					if(currentFrame<frames.get(i).index)
-					{
-						if(i-1<0)
-						{
-							throw new RuntimeException("invalid index");
-						}
-						
-						return frames.get(i-1).texture;
-					}
-				}
-			}
-			
-			throw new RuntimeException("invalid index "+currentFrame);
+	public Image getTexture() {
+		if (currentFrame < 0) {
+			return null;
 		}
 
-	
-		
-	public AnimeClip(String name,int maxFrame) {
+		// just return first texture
+		if (currentFrame == 1) {
+			return frames.get(0).texture;
+		}
+		// just return last
+		else if (currentFrame >= frames.get(frames.size() - 1).index) {
+			return frames.get(frames.size() - 1).texture;
+		}
+		// in the center area
+		else {
+
+			for (int i = 0; i < frames.size(); i++) {
+				if (currentFrame < frames.get(i).index) {
+					if (i - 1 < 0) {
+						throw new RuntimeException("invalid index");
+					}
+
+					return frames.get(i - 1).texture;
+				}
+			}
+		}
+
+		throw new RuntimeException("invalid index " + currentFrame);
+	}
+
+	public AnimeClip(String name, int maxFrame) {
 		this.name = name;
 		this.maxFrame = maxFrame;
 	}
-	
+
 	/**
 	 * check LastFrame
-	 * @return 
 	 * 
-	 */		
-	public boolean isLastFrame()
-	{
-		
-		return getCurrentFrame()==getTotalFrames();
-		
+	 * @return
+	 * 
+	 */
+	public boolean isLastFrame() {
+
+		return getCurrentFrame() == getTotalFrames();
+
 	}
-	
+
 	/**
 	 * update, auto called every frame
 	 */
-	public void update()
-	{
-		if(!stop)
-		{
+	public void update() {
+		if (!stop) {
 			currentFrame++;
-			if(currentFrame>getTotalFrames())
-			{
-				currentFrame=1;
+			if (currentFrame > getTotalFrames()) {
+				currentFrame = 1;
 			}
-		}	
+		}
 	}
-	
+
 	/**
 	 * return current frame
+	 * 
 	 * @return
 	 */
 	public int getCurrentFrame() {
@@ -160,28 +140,26 @@ public class AnimeClip implements Serializable{
 		return currentFrame;
 	}
 
-
 	/**
 	 * stop update
 	 */
 	public void stop() {
-		
-		stop=true;
-		
-	}
 
+		stop = true;
+
+	}
 
 	/**
 	 * start play
 	 */
 	public void play() {
-		stop=false;
-		
-	}
+		stop = false;
 
+	}
 
 	/**
 	 * return total frames
+	 * 
 	 * @return
 	 */
 	public int getTotalFrames() {
@@ -191,35 +169,34 @@ public class AnimeClip implements Serializable{
 
 	/**
 	 * goto and stop
+	 * 
 	 * @param index
 	 */
 	public void gotoAndStop(int index) {
-		checkIndex(1, getTotalFrames(),index);
-		this.currentFrame=index;
-		stop=true;
-		
+		checkIndex(1, getTotalFrames(), index);
+		this.currentFrame = index;
+		stop = true;
+
 	}
-	
+
 	/**
 	 * goto and play
+	 * 
 	 * @param index
 	 */
-	public void gotoAndPlay(int index)
-	{
-		checkIndex(1,getTotalFrames(),index);
+	public void gotoAndPlay(int index) {
+		checkIndex(1, getTotalFrames(), index);
 		gotoAndStop(index);
 		play();
 	}
-	
-	
+
 	protected void checkIndex(int min, int max, int value) {
-		if(value<min||value>max)
-		{
+		if (value < min || value > max) {
 			throw new RuntimeException();
 		}
-		
+
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -239,7 +216,35 @@ public class AnimeClip implements Serializable{
 	public ObservableList<Frame> getFrames() {
 		return frames;
 	}
-	
-	
-	
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException {
+
+		out.writeInt(currentFrame);
+		out.writeInt(maxFrame);
+		out.writeObject(name);
+		out.writeInt(frames.size());
+
+		for (int i = 0; i < frames.size(); i++) {
+			out.writeObject(frames.get(i));
+		}
+
+	}
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+
+		currentFrame = in.readInt();
+		maxFrame = in.readInt();
+		name = (String) in.readObject();
+		int size = in.readInt();
+
+		for (int i = 0; i < size; i++) {
+
+			Frame frame=(Frame) in.readObject();
+			frames.add(frame);
+		}
+
+	}
+
 }

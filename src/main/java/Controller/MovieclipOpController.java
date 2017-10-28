@@ -1,6 +1,6 @@
 package Controller;
 
-import Bean.AnimeClip.Frame;
+import Bean.Frame;
 import Bean.ResourceData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;

@@ -15,15 +15,25 @@ public class SerializaParser extends BaseParser{
 
 	public SerializaParser(File file) {
 		super(file);
+		ObjectInputStream objectInputStream = null;
 		try {
-			ObjectInputStream objectInputStream=new ObjectInputStream(new GZIPInputStream(new FileInputStream(file)));
+			objectInputStream=new ObjectInputStream(new FileInputStream(file));
 			this.list=(ArrayList<ResourceData>) objectInputStream.readObject();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		finally {
+			try {
+				objectInputStream.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

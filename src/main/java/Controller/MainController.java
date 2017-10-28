@@ -262,13 +262,13 @@ public class MainController extends BaseController implements Initializable{
 		});
 		//context menu1 (select multiple)
 		ContextMenu contextMenuCanvas=new ContextMenu();
-		MenuItem menuItem=new MenuItem("删除");
+		MenuItem menuItem=new MenuItem("鍒犻櫎");
 		menuItem.setOnAction(event -> removeCurrentSelectedItems());
-		MenuItem menuItem2=new MenuItem("重命名");
+		MenuItem menuItem2=new MenuItem("閲嶅懡鍚�");
 		menuItem2.setOnAction(event -> renameCurrentSelectedItems());
-		MenuItem menuItem3=new MenuItem("导入图片");
+		MenuItem menuItem3=new MenuItem("瀵煎叆鍥剧墖");
 		menuItem3.setOnAction(event -> removeCurrentSelectedItems());
-		MenuItem menuItem4=new MenuItem("导出图片");
+		MenuItem menuItem4=new MenuItem("瀵煎嚭鍥剧墖");
 		menuItem4.setOnAction(event -> removeCurrentSelectedItems());
 		
 		contextMenuCanvas.getItems().addAll(menuItem,menuItem2,menuItem3,menuItem4);
@@ -323,6 +323,7 @@ public class MainController extends BaseController implements Initializable{
 	}
 
 	protected void updateBottomPane() {
+		
 		bottomPane.getChildren().clear();
 		ResourceData data=libraryLV.getSelectionModel().getSelectedItem();
 		if(data.type==ResourceType.TEXTURE)
@@ -334,10 +335,10 @@ public class MainController extends BaseController implements Initializable{
 			bottomPane.getChildren().add(movieclipOpControllerPane);
 			movieclipOpController.update(data);
 		}
-		
-		
 	}
 
+	
+	
 	protected void removeCurrentSelectedItems() {
 		getLibrary().removeAll(libraryLV.getSelectionModel().getSelectedItems());
 		
@@ -351,7 +352,7 @@ public class MainController extends BaseController implements Initializable{
 		
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
 		arrayList.add(new FileChooser.ExtensionFilter("All Images", "*.jpg","*.png","*.jpeg"));
-		List<File> files=FileChooserTool.openMultipleDialog("选择图片",arrayList,stage);
+		List<File> files=FileChooserTool.openMultipleDialog("閫夋嫨鍥剧墖",arrayList,stage);
 		if(files!=null&&files.size()>0)
 		{
 			for (File file : files) {
@@ -394,16 +395,16 @@ public class MainController extends BaseController implements Initializable{
 
 	@FXML public void press_importData() {
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
-		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
-		File file=FileChooserTool.openDialog("导入", arrayList, stage);
+		arrayList.add(new FileChooser.ExtensionFilter("璧勬簮鏂囦欢", "*.dgsb"));
+		File file=FileChooserTool.openDialogUseSavePath("瀵煎叆", arrayList, stage);
 		getLibrary().inputFromFile(file);
 	}
 
 	
 	@FXML public void press_outputData() {
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
-		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
-		File file=FileChooserTool.openDialog("保存", arrayList, stage);
+		arrayList.add(new FileChooser.ExtensionFilter("璧勬簮鏂囦欢", "*.dgsb"));
+		File file=FileChooserTool.openSaveDialog("淇濆瓨", arrayList, stage);
 	
 		if(!file.exists())
 		{

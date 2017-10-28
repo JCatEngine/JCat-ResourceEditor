@@ -22,6 +22,7 @@ public class ResourceData  implements Externalizable{
 	public String name;
 	public ResourceType type;
 	public Object data;
+	
 	public String getImageName() {
 		String name="";
 		if(type==ResourceType.TEXTURE)
@@ -58,12 +59,8 @@ public class ResourceData  implements Externalizable{
 
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
+		
 		ByteArrayOutputStream stream=new ByteArrayOutputStream();
-		
-		
-		
-		
-		
 		
 		out.writeObject(type);
 		out.writeObject(name);
@@ -75,9 +72,12 @@ public class ResourceData  implements Externalizable{
 			byte[] imgBytes=stream.toByteArray();
 			out.writeInt(imgBytes.length);
 			out.write(imgBytes);
+			
 		}
 		else if(type==ResourceType.MOVIECLIP)
 		{
+			AnimeClip animeClip=(AnimeClip) data;
+			out.writeObject(animeClip);
 			
 			
 		}
@@ -93,13 +93,12 @@ public class ResourceData  implements Externalizable{
 		if(type==ResourceType.TEXTURE)
 		{
 			int length=in.readInt();
-			ByteArrayOutputStream buff = new ByteArrayOutputStream();//buff
-		    int readLen = 0;
+			ByteArrayOutputStream buff = new ByteArrayOutputStream();
 		    byte[] readBuff = new byte[1024];
-		    while( in.read(readBuff) != -1) {
-		      buff.write(readBuff,0,readLen);
+		    int hasRead;
+		    while((hasRead=in.read(readBuff)) != -1) {
+		      buff.write(readBuff,0,hasRead);
 		    }
-
 			BufferedImage image=ImageIO.read(new ByteArrayInputStream(buff.toByteArray()));
 			this.data=SwingFXUtils.toFXImage(image, null);
 			
@@ -107,6 +106,8 @@ public class ResourceData  implements Externalizable{
 		else if(type==ResourceType.MOVIECLIP)
 		{
 			
+			AnimeClip animeClip=(AnimeClip) in.readObject();
+			this.data=animeClip;
 			
 		}
 		

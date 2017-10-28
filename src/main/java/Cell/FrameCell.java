@@ -1,6 +1,6 @@
 package Cell;
 
-import Bean.AnimeClip.Frame;
+import Bean.Frame;
 import Bean.ResourceData;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.HBox;
