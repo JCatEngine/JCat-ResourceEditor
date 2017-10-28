@@ -2,12 +2,12 @@ package Cell;
 
 
 import Bean.ResourceData;
+import JavaFxPlus.Tool.AlertTool;
+import JavaFxPlus.Tool.FxmlTool;
 import JavaFxPlus.ViewHelper.GetAbleListCell;
 import JavaFxPlus.ViewHelper.ListViewHelper;
 import Manager.ImageManager;
-import Parser.Library;
-import Tool.AlertTool;
-import Tool.LoadTool;
+import Manager.Library;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import javafx.scene.layout.HBox;
 public class LibraryCell extends GetAbleListCell<ResourceData>{
 
 	
-	public LibraryCell(ListViewHelper libraryListHelper) {
+	public LibraryCell(ListViewHelper<ResourceData> libraryListHelper) {
 		super(libraryListHelper);
 	}
 
@@ -59,7 +59,7 @@ public class LibraryCell extends GetAbleListCell<ResourceData>{
 		{
 			if(isEditing())
 			{
-				HBox hBox=(HBox) LoadTool.loadFxml("item_library_edit", this);
+				HBox hBox=(HBox) FxmlTool.loadFxml("item_library_edit", this);
 				typeLV.setImage(ImageManager.getInstance().getIcon(item.getImageName()));
 				nameTF.setOnAction(new EventHandler<ActionEvent>() {
 					
@@ -75,7 +75,7 @@ public class LibraryCell extends GetAbleListCell<ResourceData>{
 			else
 			{
 				this.focusedProperty().removeListener(changeListener);
-				HBox hBox=(HBox) LoadTool.loadFxml("item_library", this);
+				HBox hBox=(HBox) FxmlTool.loadFxml("item_library", this);
 				nameLB.setText(item.name);
 				typeLV.setImage(ImageManager.getInstance().getIcon(item.getImageName()));
 				setGraphic(hBox);

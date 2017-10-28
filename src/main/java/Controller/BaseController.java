@@ -1,10 +1,11 @@
 package Controller;
 
+import Bean.ResourceData;
 import Manager.ConfigureManager;
 import Manager.ImageManager;
-import Parser.Library;
+import Manager.Library;
 
-public class BaseController {
+public abstract class BaseController {
 
 	protected Library getLibrary()
 	{
@@ -25,4 +26,26 @@ public class BaseController {
 		return ImageManager.getInstance();
 				
 	}
+	
+	protected MainController mainController;
+
+	public MainController getMainController() {
+		return mainController;
+	}
+
+	public void setMainController(MainController mainController) {
+		this.mainController = mainController;
+	}
+	
+	public ResourceData getSelectedItem() {
+		
+		return mainController.getSelectedItem();
+	}
+	
+	public void init() {
+		initView();
+		
+	}
+
+	protected abstract void initView();
 }

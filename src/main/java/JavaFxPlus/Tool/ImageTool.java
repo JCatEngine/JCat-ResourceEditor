@@ -1,4 +1,4 @@
-package Tool;
+package JavaFxPlus.Tool;
 
 import java.awt.image.BufferedImage;
 

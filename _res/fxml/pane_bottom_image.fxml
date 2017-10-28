@@ -17,7 +17,7 @@
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ImageOpController">
    <children>
-      <Accordion>
+      <Accordion fx:id="acc">
         <panes>
           <TitledPane fx:id="ksqbAC" animated="false" text="快速切片">
             <content>

@@ -1,7 +1,7 @@
 package Bean;
 
 import Manager.ImageManager;
-import Parser.ResourceType;
+import Manager.ResourceType;
 
 public class ResourceData {
 
@@ -14,6 +14,10 @@ public class ResourceData {
 		{
 			name=ImageManager.ICON_TEXTURE;
 		}
+		else if(type==ResourceType.MOVIECLIP)
+		{
+			name=ImageManager.ICON_MOVIECLIP;
+		}
 		
 		return name;
 	}
@@ -23,6 +27,10 @@ public class ResourceData {
 		if(type==ResourceType.TEXTURE)
 		{
 			name="图片";
+		}
+		else if(type==ResourceType.MOVIECLIP)
+		{
+			name="影片剪辑";
 		}
 		
 		return name;

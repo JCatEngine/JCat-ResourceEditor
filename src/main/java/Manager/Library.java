@@ -1,12 +1,12 @@
-package Parser;
-
-import static Parser.ResourceType.TEXTURE;
+package Manager;
 
 import java.io.File;
 import java.io.IOException;
 
+import Bean.AnimeClip;
 import Bean.ResourceData;
-import Tool.ImageTool;
+import JavaFxPlus.FilterAbleList;
+import JavaFxPlus.Tool.ImageTool;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -25,7 +25,16 @@ public class Library {
 		
 	}
 
-	private ObservableList<ResourceData> list=FXCollections.observableArrayList();
+	private FilterAbleList<ResourceData> list; 
+	
+	private int id=0;
+	
+	public Library() {
+		ObservableList<ResourceData> list=FXCollections.observableArrayList();
+		this.list=new FilterAbleList<>(list);
+	}
+
+	
 
 	public void importImage(File file) {
 		
@@ -49,7 +58,7 @@ public class Library {
 	public void addToLibrary(String name,ResourceType type, Object data) {
 		ResourceData resourceData=new ResourceData();
 		resourceData.name=name;
-		resourceData.type=TEXTURE;
+		resourceData.type=type;
 		resourceData.data=data;
 		
 		list.add(resourceData);
@@ -58,7 +67,7 @@ public class Library {
 
 	public ObservableList<ResourceData> getResources() {
 		// TODO Auto-generated method stub
-		return list;
+		return list.getList();
 	}
 
 	/**
@@ -136,6 +145,22 @@ public class Library {
 			addToLibrary(autoNewName, ResourceType.TEXTURE, newImage);
 		}
 		
+		
+	}
+
+
+
+	public void fliterResource(String text) {
+		list.filtered(d->d.name.startsWith(text));
+	}
+
+
+
+	public void createEmptyAnime() {
+		
+		String name="anime"+id++;
+		addToLibrary(name,ResourceType.MOVIECLIP,new AnimeClip(name, 1));
+			
 		
 	}
 }

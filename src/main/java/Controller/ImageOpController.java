@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Bean.ResourceData;
-import Tool.AlertTool;
+import JavaFxPlus.Tool.AlertTool;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,8 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
+import javafx.scene.control.Accordion;
 
-public class ImageOpController extends BottomBaseController implements Initializable{
+public class ImageOpController extends BaseController implements Initializable{
 
 	@FXML TitledPane ksqbAC;
 	@FXML CheckBox animeCB;
@@ -26,10 +27,11 @@ public class ImageOpController extends BottomBaseController implements Initializ
 	@FXML Label heightLB;
 	@FXML Button qbButton;
 	@FXML TitledPane qpAC;
+	@FXML Accordion acc;
 
 	protected void initView() {
 		//expand first
-		ksqbAC.setExpanded(true);
+		acc.setExpandedPane(ksqbAC);
 		hqpLB.textProperty().addListener(new ChangeListener<String>() {
 
 			@Override

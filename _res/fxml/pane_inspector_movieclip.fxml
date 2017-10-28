@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.InspectorController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MovieclipInspectorController">
    <children>
       <GridPane vgap="5.0">
         <columnConstraints>
@@ -18,6 +18,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -33,6 +35,10 @@
             <Label fx:id="idLB" text="未选中" GridPane.columnIndex="1" />
             <Label text="高度" GridPane.rowIndex="3" />
             <Label fx:id="heightLB" text="未选中" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="总帧数" GridPane.rowIndex="4" />
+            <Label fx:id="zzsLB" text="未选中" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="关键帧数" GridPane.rowIndex="5" />
+            <Label fx:id="gjzsLB" text="未选中" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" />

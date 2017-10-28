@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MovieclipOpController">
+   <children>
+      <Accordion fx:id="acc">
+        <panes>
+          <TitledPane fx:id="bjzTP" animated="false" text="编辑帧">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" />
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="参数">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" />
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</VBox>

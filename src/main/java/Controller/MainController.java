@@ -12,7 +12,7 @@ import Cell.LibraryCell;
 import JavaFxPlus.ViewHelper.CanvasHelper;
 import JavaFxPlus.ViewHelper.ImageViewHelper;
 import JavaFxPlus.ViewHelper.ListViewHelper;
-import Parser.ResourceType;
+import Manager.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -21,21 +21,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 
 /**
  * deal with the main command,and load sub pane
@@ -52,20 +52,36 @@ public class MainController extends BaseController implements Initializable{
 	@FXML VBox centerPane;
 	@FXML ImageView showIV;
 	@FXML Canvas canvas;
+	@FXML TextField inputTF;
 	
 	public static Stage stage;
 	
-	private InspectorController inspectorController;
-	private ImageOpController imageOpController;
-	private Parent imageOpControllerPane;
+	
+	
 
 	private GraphicsContext graphics;
 	private CanvasHelper canvasHelper;
 	private ImageViewHelper imageViewHelper;
 	private ListViewHelper<ResourceData> libraryListHelper;
 	
-
-
+	/**
+	 * sub pane and it's controller
+	 */
+	private ImageInspectorController imageInspectorController;
+	private Parent imageInsepctorControllerPane;
+	private ImageOpController imageOpController;
+	private Parent imageOpControllerPane;
+	
+	private MovieclipInspectorController movieclipInspectorController;
+	private Parent movieclipInspectorControllerPane;
+	private MovieclipOpController movieclipOpController;
+	private Parent movieclipOpControllerPane;
+	
+	private ParticleInspectorController particleInspectorController;
+	private Parent particleInspectorControllerPane;
+	private ParticleOpController particleOpController;
+	private Parent particleOpControllerPane;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -79,18 +95,31 @@ public class MainController extends BaseController implements Initializable{
 		
 	}
 
-	private void initView() {
+	protected void initView() {
 		initList();
 		initInspector();
 		initBottomPane();
 		initCanvas();
+		initSearchInput();
 		
-		this.imageViewHelper=new ImageViewHelper(showIV);
+		
+	}
+
+
+
+	private void initSearchInput() {
+		this.inputTF.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				getLibrary().fliterResource(inputTF.getText());
+			}
+		});
 		
 	}
 
 	private void initCanvas() {
 		
+		this.imageViewHelper=new ImageViewHelper(showIV);
 		this.canvasHelper=new CanvasHelper(canvas);
 		graphics=canvasHelper.getGraphicsContext2D();
 		canvasHelper.setLineWidth(5);
@@ -100,22 +129,27 @@ public class MainController extends BaseController implements Initializable{
 	private void initBottomPane() {
 		//reload bottom pane
 		try {
+			//image
 			FXMLLoader loader=new FXMLLoader();
 			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
 			this.imageOpControllerPane= loader.load();
 			this.imageOpController=loader.getController();
 			this.imageOpController.setMainController(this);
 			this.imageOpController.init();
-			
-//			FXMLLoader loader=new FXMLLoader();
-//			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
-//			Parent root= loader.load();
-//			this.imageOpController=loader.getController();
-//			
-//			FXMLLoader loader=new FXMLLoader();
-//			loader.setLocation(new File("_res/fxml/pane_bottom_image.fxml").toURL());
-//			Parent root= loader.load();
-//			this.imageOpController=loader.getController();
+			//movieclip
+			loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_bottom_movieclip.fxml").toURL());
+			this.movieclipOpControllerPane= loader.load();
+			this.movieclipOpController=loader.getController();
+			this.movieclipOpController.setMainController(this);
+			this.movieclipOpController.init();
+			//particle
+			loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_bottom_particle.fxml").toURL());
+			this.particleOpControllerPane= loader.load();
+			this.particleOpController=loader.getController();
+			this.particleOpController.setMainController(this);
+			this.particleOpController.init();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -129,14 +163,32 @@ public class MainController extends BaseController implements Initializable{
 		
 	}
 
+	/**
+	 * load all Inspector pane but do not show then
+	 */
 	private void initInspector() {
 		
-		FXMLLoader loader=new FXMLLoader();
 		try {
-			loader.setLocation(new File("_res/fxml/pane_inspector.fxml").toURL());
-			Parent root= loader.load();
-			leftPane.getChildren().add(root);
-			inspectorController=loader.getController();
+			FXMLLoader loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_inspector_image.fxml").toURL());
+			this.imageInsepctorControllerPane= loader.load();
+			this.imageInspectorController=loader.getController();
+			this.imageInspectorController.setMainController(this);
+			this.imageInspectorController.init();
+			
+			loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_inspector_movieclip.fxml").toURL());
+			this.movieclipInspectorControllerPane= loader.load();
+			this.movieclipInspectorController=loader.getController();
+			this.movieclipInspectorController.setMainController(this);
+			this.movieclipInspectorController.init();
+			
+			loader=new FXMLLoader();
+			loader.setLocation(new File("_res/fxml/pane_inspector_particle.fxml").toURL());
+			this.particleInspectorControllerPane= loader.load();
+			this.particleInspectorController=loader.getController();
+			this.particleInspectorController.setMainController(this);
+			this.particleInspectorController.init();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -155,7 +207,7 @@ public class MainController extends BaseController implements Initializable{
 		libraryLV.setEditable(true);
 		//set select multiple
 		libraryLV.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		this.libraryListHelper=new ListViewHelper();
+		this.libraryListHelper=new ListViewHelper<>();
 		libraryLV.setCellFactory(param -> new LibraryCell(libraryListHelper));
 		libraryLV.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ResourceData>() {
 
@@ -166,22 +218,21 @@ public class MainController extends BaseController implements Initializable{
 				//if a image,show image
 				if(newValue.type==ResourceType.TEXTURE)
 				{
-					//set image
+					//set library small image
 					selectIV.setImage((Image) newValue.data);
-					//update inspector
-					inspectorController.update(newValue);
-					//update bottom pane
-					updateBottomPane();
-					//update center pane
-					updateCenterPane();
-					
+				
 				}
 				//if a movieclip,play anime
-				else
+				else if(newValue.type==ResourceType.MOVIECLIP)
 				{
-					//remove
-					updateBottomPane();
+					
 				}
+				
+				updateInspector();
+				//update bottom pane
+				updateBottomPane();
+				//update center pane
+				updateCenterPane();
 				
 			}
 		});
@@ -214,6 +265,26 @@ public class MainController extends BaseController implements Initializable{
 		
 	}
 
+	protected void updateInspector() {
+		leftPane.getChildren().clear();
+		ResourceData data=libraryLV.getSelectionModel().getSelectedItem();
+		if(data.type==ResourceType.TEXTURE)
+		{
+			leftPane.getChildren().add(imageInsepctorControllerPane);
+			imageInspectorController.update(data);
+		}
+		else if(data.type==ResourceType.MOVIECLIP)
+		{
+			leftPane.getChildren().add(movieclipInspectorControllerPane);
+			movieclipInspectorController.update(data);
+		}
+		else if(data.type==ResourceType.PARTICLE)
+		{
+			leftPane.getChildren().add(particleInspectorControllerPane);
+			particleInspectorController.update(data);
+		}
+	}
+
 	private void renameCurrentSelectedItems() {
 		LibraryCell cell=(LibraryCell) libraryListHelper.getCell(libraryLV.getSelectionModel().getSelectedIndex());
 		cell.startEdit();
@@ -240,7 +311,11 @@ public class MainController extends BaseController implements Initializable{
 		{
 			bottomPane.getChildren().add(imageOpControllerPane);
 		}
-		
+		else if(data.type==ResourceType.MOVIECLIP)
+		{
+			bottomPane.getChildren().add(movieclipOpControllerPane);
+			movieclipOpController.update(data);
+		}
 		
 		
 	}
@@ -318,6 +393,11 @@ public class MainController extends BaseController implements Initializable{
 			canvasHelper.drawGridLine(x,y);
 			
 		}
+	}
+
+	@FXML public void press_createAnime() {
+		getLibrary().createEmptyAnime();
+		
 	}
 	
 	

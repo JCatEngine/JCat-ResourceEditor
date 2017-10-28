@@ -9,7 +9,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,14 +38,19 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="编辑">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                        <MenuItem mnemonicParsing="false" text="删除选中" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="对象">
+                  <Menu mnemonicParsing="false" text="动画">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#press_createAnime" text="创建动画" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="粒子系统">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="创建贴图" />
-                      <MenuItem mnemonicParsing="false" text="创建动画" />
-                        <MenuItem mnemonicParsing="false" text="创建粒子效果" />
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="设置">
@@ -85,7 +89,7 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </Label>
-                              <TextField prefHeight="26.0" prefWidth="118.0" />
+                              <TextField fx:id="inputTF" prefHeight="26.0" prefWidth="118.0" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -102,11 +106,7 @@
                                  <children>
                                     <StackPane alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <ImageView fx:id="showIV" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../img/delete.png" />
-                                             </image>
-                                          </ImageView>
+                                          <ImageView fx:id="showIV" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                                           <Canvas fx:id="canvas" height="200.0" width="200.0" />
                                        </children>
                                     </StackPane>
