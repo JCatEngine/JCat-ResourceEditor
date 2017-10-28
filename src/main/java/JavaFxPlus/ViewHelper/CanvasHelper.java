@@ -81,4 +81,9 @@ public class CanvasHelper {
 		
 	}
 
+	public void clear() {
+		graphics.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		
+	}
+
 }

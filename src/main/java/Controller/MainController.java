@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import Bean.AnimeClip;
 import Bean.ResourceData;
 import Cell.LibraryCell;
 import JavaFxPlus.ViewHelper.CanvasHelper;
@@ -215,24 +216,31 @@ public class MainController extends BaseController implements Initializable{
 			public void changed(ObservableValue<? extends ResourceData> observable, ResourceData oldValue,
 					ResourceData newValue) {
 				
-				//if a image,show image
-				if(newValue.type==ResourceType.TEXTURE)
+				if(newValue!=null)
 				{
-					//set library small image
-					selectIV.setImage((Image) newValue.data);
-				
-				}
-				//if a movieclip,play anime
-				else if(newValue.type==ResourceType.MOVIECLIP)
-				{
+					//if a image,show image
+					if(newValue.type==ResourceType.TEXTURE)
+					{
+						//set library small image
+						selectIV.setImage((Image) newValue.data);
 					
+					}
+					//if a movieclip,play anime
+					else if(newValue.type==ResourceType.MOVIECLIP)
+					{
+						
+					}
+					
+					canvasHelper.clear();
+					imageViewHelper.stop();
+					
+					updateInspector();
+					//update bottom pane
+					updateBottomPane();
+					//update center pane
+					updateCenterPane();
 				}
 				
-				updateInspector();
-				//update bottom pane
-				updateBottomPane();
-				//update center pane
-				updateCenterPane();
 				
 			}
 		});
@@ -300,6 +308,13 @@ public class MainController extends BaseController implements Initializable{
 			imageViewHelper.resizeToImage(image);
 			
 			showIV.setImage((Image) data.data);
+		}
+		else if(data.type==ResourceType.MOVIECLIP)
+		{
+			AnimeClip animeClip=(AnimeClip) data.data;
+			Image image=animeClip.getTexture();
+			imageViewHelper.play(animeClip);
+			
 		}
 		
 	}
@@ -390,13 +405,14 @@ public class MainController extends BaseController implements Initializable{
 			Image image=(Image) getSelectedItem().data;
 		
 			//graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			canvasHelper.clear();
 			canvasHelper.drawGridLine(x,y);
 			
 		}
 	}
 
 	@FXML public void press_createAnime() {
-		getLibrary().createEmptyAnime();
+		//getLibrary().createEmptyAnime();
 		
 	}
 	

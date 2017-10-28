@@ -29,6 +29,8 @@ public class MovieclipInspectorController extends BaseController{
 		{
 			widthLB.setText(image.getWidth()+"");
 			heightLB.setText(image.getHeight()+"");
+			zzsLB.setText(animeClip.getMaxFrame()+"");
+			gjzsLB.setText(animeClip.getFrames().size()+"");
 		}
 		typeLB.setText(data.getTypeName());
 		idLB.setText(data.name);

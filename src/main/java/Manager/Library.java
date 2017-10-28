@@ -40,7 +40,9 @@ public class Library {
 		
 		try {
 			Image image=new Image(file.toURL().toString());
-			addToLibrary(file.getName(),ResourceType.TEXTURE,image);
+			String name=file.getName();
+			name=name.substring(0, name.lastIndexOf("."));
+			addToLibrary(name,ResourceType.TEXTURE,image);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +68,6 @@ public class Library {
 	}
 
 	public ObservableList<ResourceData> getResources() {
-		// TODO Auto-generated method stub
 		return list.getList();
 	}
 
@@ -95,7 +96,7 @@ public class Library {
 	 */
 	public boolean hasSameName(String name) {
 		
-		return list.filtered(d->d.name.equals(name)).size()>0;
+		return list.filter(d->d.name.equals(name)).size()>0;
 	}
 
 	/**
@@ -104,22 +105,48 @@ public class Library {
 	 * @param xAmount
 	 * @param yAmount
 	 * @param name
+	 * @param jgzs 
+	 * @param anime 
+	 * @param zscdh  是否只生成动画不生成切片
 	 */
-	public void sliceAndAdd(Image image, int xAmount, int yAmount, String name) {
+	public void sliceAndAdd(Image image, int xAmount, int yAmount, String name, Boolean anime, int jgzs, Boolean zscdh) {
 	
 		
 		int partWidth=(int) (image.getWidth()/xAmount);
 		int partHeight=(int) (image.getHeight()/yAmount);
 		
-		for(int x=0;x<xAmount;x++)
+		
+		
+		for(int y=0;y<yAmount;y++)
 		{
-			for(int y=0;y<yAmount;y++)
+			//if need to generate a new anime
+			AnimeClip animeClip = null;
+			if(anime)
+			{
+				int maxFrame=xAmount*jgzs;
+				animeClip=new AnimeClip(name+"anime"+y, maxFrame);
+			}
+			
+			for(int x=0;x<xAmount;x++)
 			{
 				int xPos=x*partWidth;
 				int yPos=y*partHeight;
 				String autoNewName=name+x+y;
 				
-				sliceAndAdd(image,xPos,yPos,partWidth,partHeight,autoNewName);
+				
+				Image sub=slice(image,xPos,yPos,partWidth,partHeight,autoNewName,zscdh);
+				
+				
+				if(anime)
+				{
+					animeClip.insertFrame(x*jgzs+1, sub);
+				}
+				
+			}
+			
+			if(anime)
+			{
+				addToLibrary(animeClip.getName(), ResourceType.MOVIECLIP, animeClip);
 			}
 		}
 		
@@ -135,23 +162,27 @@ public class Library {
 	 * @param partWidth
 	 * @param partHeight
 	 * @param autoNewName
+	 * @param zscdh 
+	 * @return 
 	 */
-	public void sliceAndAdd(Image image, int xPos, int yPos, int partWidth, int partHeight, String autoNewName) {
+	public Image slice(Image image, int xPos, int yPos, int partWidth, int partHeight, String autoNewName, boolean zscdh) {
 		
 		Image newImage=ImageTool.subImage(image,xPos,yPos,partWidth,partHeight);
 		//if this do not exist,then add it
-		if(hasSameName(autoNewName)==false)
+		if(hasSameName(autoNewName)==false&&!zscdh)
 		{
 			addToLibrary(autoNewName, ResourceType.TEXTURE, newImage);
 		}
 		
+		
+		return newImage;
 		
 	}
 
 
 
 	public void fliterResource(String text) {
-		list.filtered(d->d.name.startsWith(text));
+		list.filterList(d->d.name.startsWith(text));
 	}
 
 

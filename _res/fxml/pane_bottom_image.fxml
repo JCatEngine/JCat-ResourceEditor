@@ -32,6 +32,7 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <CheckBox fx:id="animeCB" mnemonicParsing="false" text="生成动画" GridPane.rowIndex="2">
@@ -98,11 +99,30 @@
                                     </Label>
                                  </children>
                               </HBox>
-                              <Button fx:id="qbButton" mnemonicParsing="false" onAction="#press_qiepian" text="生成切片" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button fx:id="qbButton" mnemonicParsing="false" onAction="#press_qiepian" text="生成" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Button>
+                              <HBox fx:id="jgzsHbox" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label text="间隔帧数:">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="jgzsTF" prefWidth="50.0" text="1">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </HBox>
+                              <CheckBox fx:id="zscdbCB" mnemonicParsing="false" text="只生成动画" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </CheckBox>
                            </children>
                         </GridPane>
                      </children>

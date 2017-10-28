@@ -40,7 +40,7 @@ public class FilterAbleList<T> {
 		showList.remove(data);
 	}
 
-	public List<T> filtered(Predicate<T> predicate) {
+	public List<T> filterList(Predicate<T> predicate) {
 		
 		//fliter cache list,and add data to show List
 		List<T> list=cacheList.filtered(predicate);
@@ -52,6 +52,12 @@ public class FilterAbleList<T> {
 		
 		return showList;
 	}
+
+	public List<T> filter(Predicate<T> predicate) {
+		// TODO Auto-generated method stub
+		return cacheList.filtered(predicate);
+	}
+
 	
 	
 	

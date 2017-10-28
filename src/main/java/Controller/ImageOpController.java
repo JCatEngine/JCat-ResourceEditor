@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.control.Accordion;
+import javafx.scene.layout.HBox;
 
 public class ImageOpController extends BaseController implements Initializable{
 
@@ -28,6 +29,9 @@ public class ImageOpController extends BaseController implements Initializable{
 	@FXML Button qbButton;
 	@FXML TitledPane qpAC;
 	@FXML Accordion acc;
+	@FXML HBox jgzsHbox;
+	@FXML TextField jgzsTF;
+	@FXML CheckBox zscdbCB;
 
 	protected void initView() {
 		//expand first
@@ -66,6 +70,18 @@ public class ImageOpController extends BaseController implements Initializable{
 		});
 		
 	
+		jgzsHbox.setVisible(false);
+		zscdbCB.setVisible(false);
+		animeCB.selectedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				jgzsHbox.setVisible(newValue);
+				zscdbCB.setVisible(newValue);
+				
+			}
+		});
+		
 		
 		
 	}
@@ -96,7 +112,10 @@ public class ImageOpController extends BaseController implements Initializable{
 			int y=Integer.parseInt(lqpLB.getText());
 			ResourceData resourceData=getSelectedItem();
 			Image image=(Image) resourceData.data;
-			getLibrary().sliceAndAdd(image,x,y,resourceData.name);
+			int jgzs=Integer.parseInt(jgzsTF.getText());
+			Boolean anime=animeCB.isSelected();
+			Boolean zscdh=zscdbCB.isSelected();
+			getLibrary().sliceAndAdd(image,x,y,resourceData.name,anime,jgzs,zscdh);
 			
 		} catch (Exception e) {
 			AlertTool.showSimpleAlert("错误", "参数错误");

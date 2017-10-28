@@ -140,7 +140,7 @@ public class AnimeClip {
 	/**
 	 * update, auto called every frame
 	 */
-	void update()
+	public void update()
 	{
 		if(!stop)
 		{
