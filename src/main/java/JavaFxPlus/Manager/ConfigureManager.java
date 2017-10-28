@@ -1,13 +1,17 @@
-package Manager;
+package JavaFxPlus.Manager;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.json.JSONObject;
 
+import JavaFxPlus.Tool.FileTool;
 import Main.Config;
-import Tool.FileTool;
 
+/**
+ * configureManager
+ * @author Administrator
+ *
+ */
 public class ConfigureManager {
 
 	private static ConfigureManager instance;
@@ -24,6 +28,7 @@ public class ConfigureManager {
 	
 	static
 	{
+		//init directory
 		File file=new File("data");
 		if(!file.exists())
 		{
@@ -35,7 +40,14 @@ public class ConfigureManager {
 	
 	
 	
+	/**
+	 * lastChoosePath 
+	 */
 	private File lastChoosePath;
+	/**
+	 * lastSavePath
+	 */
+	private File lastSavePath;
 
 	public ConfigureManager() {
 		loadConfigure();
@@ -53,15 +65,28 @@ public class ConfigureManager {
 	}
 	
 	private void _parseJson(JSONObject jsonObject) {
+	
 		
-		this.lastChoosePath=new File(jsonObject.getString("lastChoosePath"));
+		try {
+			this.lastChoosePath=new File(jsonObject.getString("lastChoosePath"));
+		} catch (Exception e) {
+		}
+		
+		try {
+			this.lastSavePath=new File(jsonObject.getString("lastSavePath"));
+		} catch (Exception e) {
+		}
+		
 		
 	}
+
+	
 
 	public void saveConfigure() {
 		
 		JSONObject jsonObject=new JSONObject();
 		jsonObject.put("lastChoosePath", lastChoosePath.getAbsolutePath());
+		jsonObject.put("lastSavePath", lastSavePath.getAbsolutePath());
 		
 		_outputJson(jsonObject);
 		
@@ -73,15 +98,29 @@ public class ConfigureManager {
 		
 	}
 
+	
+	
 	public File getLastChoosePath() {
 		// TODO Auto-generated method stub
 		return lastChoosePath;
 	}
 
 	public void setLastChoosePath(File file) {
-	
 		this.lastChoosePath=file;
 		saveConfigure();
 		
 	}
+
+	public File getLastSavePath() {
+		return lastSavePath;
+	}
+
+	public void setLastSavePath(File lastSavePath) {
+		this.lastSavePath = lastSavePath;
+		saveConfigure();
+	}
+
+	
+	
+	
 }

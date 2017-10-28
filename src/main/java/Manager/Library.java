@@ -2,11 +2,14 @@ package Manager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Bean.AnimeClip;
 import Bean.ResourceData;
-import JavaFxPlus.FilterAbleList;
 import JavaFxPlus.Tool.ImageTool;
+import JavaFxPlus.Util.FilterAbleList;
+import Parser.SerializaOutput;
+import Parser.SerializaParser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -192,6 +195,26 @@ public class Library {
 		String name="anime"+id++;
 		addToLibrary(name,ResourceType.MOVIECLIP,new AnimeClip(name, 1));
 			
+		
+	}
+
+
+
+	public void outputToFile(File file) {
+		
+		//arraylist 才可以序列化 
+		ArrayList<ResourceData> resourceDatas=new ArrayList<>(getResources());
+		new SerializaOutput(resourceDatas,file);
+		
+		
+		
+	}
+
+
+
+	public void inputFromFile(File file) {
+		ArrayList<ResourceData> resourceDatas=new SerializaParser(file).toList();
+		this.list.addAll(resourceDatas);
 		
 	}
 }

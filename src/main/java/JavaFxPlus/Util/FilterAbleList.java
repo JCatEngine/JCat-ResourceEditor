@@ -1,5 +1,6 @@
-package JavaFxPlus;
+package JavaFxPlus.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -56,6 +57,12 @@ public class FilterAbleList<T> {
 	public List<T> filter(Predicate<T> predicate) {
 		// TODO Auto-generated method stub
 		return cacheList.filtered(predicate);
+	}
+
+	public void addAll(ArrayList<T> datas) {
+		for (T data : datas) {
+			add(data);
+		}
 	}
 
 	

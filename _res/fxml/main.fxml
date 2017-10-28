@@ -27,20 +27,25 @@
                <menus>
                   <Menu mnemonicParsing="false" text="文件">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="导入资源文件" />
-                        <MenuItem mnemonicParsing="false" text="导出资源文件">
+                        <MenuItem mnemonicParsing="false" onAction="#press_importData" text="导入资源文件">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#press_outputData" text="导出资源文件">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#press_ImportImage" text="导入图片到库" />
+                        <MenuItem mnemonicParsing="false" onAction="#press_ImportImage" text="导入图片到库">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                           </accelerator></MenuItem>
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="编辑">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                         <MenuItem mnemonicParsing="false" text="删除选中" />
-                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                        <MenuItem mnemonicParsing="false" text="清空库" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="动画">
@@ -48,21 +53,9 @@
                         <MenuItem mnemonicParsing="false" onAction="#press_createAnime" text="创建动画" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="粒子系统">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="设置">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="帮助">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="首选项" />
-                     </items>
-                  </Menu>
+                  <Menu mnemonicParsing="false" text="粒子系统" />
+                  <Menu mnemonicParsing="false" text="设置" />
+                  <Menu mnemonicParsing="false" text="帮助" />
                </menus>
             </MenuBar>
             <GridPane maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">

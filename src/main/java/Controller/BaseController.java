@@ -1,7 +1,7 @@
 package Controller;
 
 import Bean.ResourceData;
-import Manager.ConfigureManager;
+import JavaFxPlus.Manager.ConfigureManager;
 import Manager.ImageManager;
 import Manager.Library;
 

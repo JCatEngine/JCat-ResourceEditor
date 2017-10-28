@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import Bean.AnimeClip;
 import Bean.ResourceData;
 import Cell.LibraryCell;
+import JavaFxPlus.Tool.FileChooserTool;
 import JavaFxPlus.ViewHelper.CanvasHelper;
 import JavaFxPlus.ViewHelper.ImageViewHelper;
 import JavaFxPlus.ViewHelper.ListViewHelper;
@@ -36,6 +38,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 /**
@@ -345,7 +348,10 @@ public class MainController extends BaseController implements Initializable{
 	 * @param event
 	 */
 	@FXML public void press_ImportImage(ActionEvent event) {
-		List<File> files=openImageFileChooser("选择图片");
+		
+		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
+		arrayList.add(new FileChooser.ExtensionFilter("All Images", "*.jpg","*.png","*.jpeg"));
+		List<File> files=FileChooserTool.openMultipleDialog("选择图片",arrayList,stage);
 		if(files!=null&&files.size()>0)
 		{
 			for (File file : files) {
@@ -355,41 +361,11 @@ public class MainController extends BaseController implements Initializable{
 		
 	}
 
-	
-	
 
 
-	private List<File> openImageFileChooser(String title) {
-		
-		FileChooser fileChooser=new FileChooser();
-		fileChooser.setTitle(title);
-		fileChooser.getExtensionFilters().addAll(
-				    new FileChooser.ExtensionFilter("All Images", "*.jpg","*.png","*.jpeg")
-	            );
-		
-		//set init directory
-		if(getConfigureManager().getLastChoosePath()!=null)
-		{
-			fileChooser.setInitialDirectory(getConfigureManager().getLastChoosePath());
-		}
-		List<File> files=fileChooser.showOpenMultipleDialog(stage);
-		
-		//save init directory
-		if(files!=null&&files.size()>0)
-		{
-			File file=files.get(0);
-			if(!file.isDirectory())
-			{
-				getConfigureManager().setLastChoosePath(file.getParentFile());
-			}
-			
-		}
-		
-		return files;
-	}
+
 
 	public ResourceData getSelectedItem() {
-		// TODO Auto-generated method stub
 		return libraryLV.getSelectionModel().getSelectedItem();
 		
 	}
@@ -415,6 +391,34 @@ public class MainController extends BaseController implements Initializable{
 		//getLibrary().createEmptyAnime();
 		
 	}
+
+	@FXML public void press_importData() {
+		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
+		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
+		File file=FileChooserTool.openDialog("导入", arrayList, stage);
+		getLibrary().inputFromFile(file);
+	}
+
+	
+	@FXML public void press_outputData() {
+		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
+		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
+		File file=FileChooserTool.openDialog("保存", arrayList, stage);
+	
+		if(!file.exists())
+		{
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		getLibrary().outputToFile(file);
+	}
+
+	
 	
 	
 	

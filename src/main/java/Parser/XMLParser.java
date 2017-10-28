@@ -1,5 +1,5 @@
 package Parser;
 
-public class XMLParser extends BaseParser {
+public class XMLParser{
 
 }

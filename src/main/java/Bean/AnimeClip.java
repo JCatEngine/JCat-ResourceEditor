@@ -1,8 +1,7 @@
 package Bean;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Comparator;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,7 @@ import javafx.scene.image.Image;
  * @author Administrator
  *
  */
-public class AnimeClip {
+public class AnimeClip implements Serializable{
 	
 	/**
 	 * name of the anime
@@ -33,7 +32,7 @@ public class AnimeClip {
 	protected int currentFrame=-1;
 
 
-	public class Frame {
+	public class Frame implements Serializable{
 
 		public int index;
 		public Image texture;
