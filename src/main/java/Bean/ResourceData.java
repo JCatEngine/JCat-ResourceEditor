@@ -10,10 +10,8 @@ import java.io.ObjectOutput;
 
 import javax.imageio.ImageIO;
 
-import JavaFxPlus.Tool.ImageTool;
 import Manager.ImageManager;
 import Manager.ResourceType;
-import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
@@ -21,7 +19,12 @@ public class ResourceData  implements Externalizable{
 
 	public String name;
 	public ResourceType type;
-	public Object data;
+	private Image image;
+	private AnimeClip animeClip;
+	
+	public ResourceData() {
+		
+	}
 	
 	public String getImageName() {
 		String name="";
@@ -54,7 +57,7 @@ public class ResourceData  implements Externalizable{
 	@Override
 	public String toString() {
 		return "ResourceData [" + (name != null ? "name=" + name + ", " : "")
-				+ (type != null ? "type=" + type + ", " : "") + (data != null ? "data=" + data : "") + "]";
+				+ (type != null ? "type=" + type + ", " : "") + (getData() != null ? "data=" + getData() : "") + "]";
 	}
 
 	@Override
@@ -66,7 +69,7 @@ public class ResourceData  implements Externalizable{
 		out.writeObject(name);
 		if(type==ResourceType.TEXTURE)
 		{
-			Image image=(Image) data;
+			Image image=(Image) getData();
 			BufferedImage bufferedImage=SwingFXUtils.fromFXImage(image, null);
 			ImageIO.write(bufferedImage, "PNG", stream);
 			byte[] imgBytes=stream.toByteArray();
@@ -76,7 +79,7 @@ public class ResourceData  implements Externalizable{
 		}
 		else if(type==ResourceType.MOVIECLIP)
 		{
-			AnimeClip animeClip=(AnimeClip) data;
+			AnimeClip animeClip=(AnimeClip) getData();
 			out.writeObject(animeClip);
 			
 			
@@ -100,14 +103,14 @@ public class ResourceData  implements Externalizable{
 		      buff.write(readBuff,0,hasRead);
 		    }
 			BufferedImage image=ImageIO.read(new ByteArrayInputStream(buff.toByteArray()));
-			this.data=SwingFXUtils.toFXImage(image, null);
+			this.setData(SwingFXUtils.toFXImage(image, null));
 			
 		}
 		else if(type==ResourceType.MOVIECLIP)
 		{
 			
 			AnimeClip animeClip=(AnimeClip) in.readObject();
-			this.data=animeClip;
+			this.setData(animeClip);
 			
 		}
 		
@@ -116,6 +119,31 @@ public class ResourceData  implements Externalizable{
 		
 		
 		
+	}
+
+	public Object getData() {
+		if(type==ResourceType.TEXTURE)
+		{
+			return image;
+		}
+		else if(type==ResourceType.MOVIECLIP)
+		{
+			return animeClip;
+		}
+		
+		return null;
+		
+	}
+
+	public void setData(Object data) {
+		if(type==ResourceType.TEXTURE)
+		{
+			image=(Image) data;
+		}
+		else if(type==ResourceType.MOVIECLIP)
+		{
+			animeClip=(AnimeClip) data;
+		}
 	}
 
 	

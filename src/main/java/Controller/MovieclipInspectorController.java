@@ -22,7 +22,7 @@ public class MovieclipInspectorController extends BaseController{
 	}
 
 	public void update(ResourceData data) {
-		AnimeClip animeClip=(AnimeClip) data.data;
+		AnimeClip animeClip=(AnimeClip) data.getData();
 		
 		Image image=animeClip.getTexture();
 		if(image!=null)

@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.zip.GZIPInputStream;
 
 import Bean.ResourceData;
 
@@ -13,6 +12,7 @@ public class SerializaParser extends BaseParser{
 
 	private ArrayList<ResourceData> list;
 
+	@SuppressWarnings("unchecked")
 	public SerializaParser(File file) {
 		super(file);
 		ObjectInputStream objectInputStream = null;

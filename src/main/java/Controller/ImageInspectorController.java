@@ -28,7 +28,7 @@ public class ImageInspectorController extends BaseController implements Initiali
 	}
 
 	public void update(ResourceData newValue) {
-			Image image=(Image) newValue.data;
+			Image image=(Image) newValue.getData();
 			typeLB.setText(newValue.getTypeName());
 			widthLB.setText(image.getWidth()+"");
 			heightLB.setText(image.getHeight()+"");

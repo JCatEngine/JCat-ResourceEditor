@@ -225,7 +225,7 @@ public class MainController extends BaseController implements Initializable{
 					if(newValue.type==ResourceType.TEXTURE)
 					{
 						//set library small image
-						selectIV.setImage((Image) newValue.data);
+						selectIV.setImage((Image) newValue.getData());
 					
 					}
 					//if a movieclip,play anime
@@ -306,15 +306,15 @@ public class MainController extends BaseController implements Initializable{
 		if(data.type==ResourceType.TEXTURE)
 		{
 			//set the width and height to fit the width and height of image
-			Image image=(Image) data.data;
+			Image image=(Image) data.getData();
 			canvasHelper.resizeToImage(image);
 			imageViewHelper.resizeToImage(image);
 			
-			showIV.setImage((Image) data.data);
+			showIV.setImage((Image) data.getData());
 		}
 		else if(data.type==ResourceType.MOVIECLIP)
 		{
-			AnimeClip animeClip=(AnimeClip) data.data;
+			AnimeClip animeClip=(AnimeClip) data.getData();
 			Image image=animeClip.getTexture();
 			imageViewHelper.play(animeClip);
 			
@@ -379,7 +379,7 @@ public class MainController extends BaseController implements Initializable{
 		
 		if(getSelectedItem()!=null)
 		{
-			Image image=(Image) getSelectedItem().data;
+			Image image=(Image) getSelectedItem().getData();
 		
 			//graphicsContext.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 			canvasHelper.clear();
@@ -393,15 +393,15 @@ public class MainController extends BaseController implements Initializable{
 		
 	}
 
-	@FXML public void press_importData() {
+	@FXML public void press_importDataxlh() {
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
 		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
 		File file=FileChooserTool.openDialogUseSavePath("导入", arrayList, stage);
-		getLibrary().inputFromFile(file);
+		getLibrary().inputFromFileXLH(file);
 	}
 
 	
-	@FXML public void press_outputData() {
+	@FXML public void press_outputDataxlh() {
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
 		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsb"));
 		File file=FileChooserTool.openSaveDialog("保存", arrayList, stage);
@@ -416,7 +416,38 @@ public class MainController extends BaseController implements Initializable{
 			}
 		}
 		
-		getLibrary().outputToFile(file);
+		getLibrary().outputToFileXLH(file);
+	}
+
+	
+
+	@FXML public void press_importDatagson() {
+		
+		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
+		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsbg"));
+		File file=FileChooserTool.openDialogUseSavePath("导入", arrayList, stage);
+		getLibrary().inputFromFileGson(file);
+		
+	}
+
+	@FXML public void press_outputDatagson() {
+		
+		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
+		arrayList.add(new FileChooser.ExtensionFilter("资源文件", "*.dgsbg"));
+		File file=FileChooserTool.openSaveDialog("保存", arrayList, stage);
+	
+		if(!file.exists())
+		{
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		getLibrary().outputToFileGson(file);
+		
 	}
 
 	

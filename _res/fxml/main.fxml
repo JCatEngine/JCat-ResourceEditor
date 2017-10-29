@@ -27,15 +27,17 @@
                <menus>
                   <Menu mnemonicParsing="false" text="文件">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#press_importData" text="导入资源文件">
+                        <MenuItem mnemonicParsing="false" onAction="#press_importDataxlh" text="导入资源文件(序列化)">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="A" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#press_outputData" text="导出资源文件">
+                        <MenuItem mnemonicParsing="false" onAction="#press_outputDataxlh" text="导出资源文件(序列化)">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                            </accelerator>
                         </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#press_importDatagson" text="导入资源文件(gson)" />
+                        <MenuItem mnemonicParsing="false" onAction="#press_outputDatagson" text="导出资源文件(gson)" />
                         <MenuItem mnemonicParsing="false" onAction="#press_ImportImage" text="导入图片到库">
                            <accelerator>
                               <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />

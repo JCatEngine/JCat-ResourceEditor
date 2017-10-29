@@ -22,10 +22,9 @@ public class Frame implements Externalizable{
 	public int index;
 	public Image texture;
 
-	public Frame(AnimeClip animeClip, int index, Image texture) {
+	public Frame(int index, Image texture) {
 		this.index = index;
 		this.texture = texture;
-		// TODO Auto-generated constructor stub
 	}
 
 	public Frame() {

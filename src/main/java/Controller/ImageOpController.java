@@ -41,7 +41,7 @@ public class ImageOpController extends BaseController implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				ResourceData data=getSelectedItem();
-				Image image=(Image) data.data;
+				Image image=(Image) data.getData();
 				try {
 					int value=Integer.parseInt(newValue);
 					widthLB.setText(image.getWidth()/value+"");
@@ -57,7 +57,7 @@ public class ImageOpController extends BaseController implements Initializable{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				ResourceData data=getSelectedItem();
-				Image image=(Image) data.data;
+				Image image=(Image) data.getData();
 				try {
 					int value=Integer.parseInt(newValue);
 					heightLB.setText(image.getHeight()/value+"");
@@ -111,7 +111,7 @@ public class ImageOpController extends BaseController implements Initializable{
 			int x=Integer.parseInt(hqpLB.getText());
 			int y=Integer.parseInt(lqpLB.getText());
 			ResourceData resourceData=getSelectedItem();
-			Image image=(Image) resourceData.data;
+			Image image=(Image) resourceData.getData();
 			int jgzs=Integer.parseInt(jgzsTF.getText());
 			Boolean anime=animeCB.isSelected();
 			Boolean zscdh=zscdbCB.isSelected();

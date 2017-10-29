@@ -1,13 +1,20 @@
 package Manager;
 
+import java.awt.List;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 
 import Bean.AnimeClip;
 import Bean.ResourceData;
 import JavaFxPlus.Tool.ImageTool;
 import JavaFxPlus.Util.FilterAbleList;
+import Parser.GsonOutput;
+import Parser.GsonParser;
 import Parser.SerializaOutput;
 import Parser.SerializaParser;
 import javafx.collections.FXCollections;
@@ -64,7 +71,7 @@ public class Library {
 		ResourceData resourceData=new ResourceData();
 		resourceData.name=name;
 		resourceData.type=type;
-		resourceData.data=data;
+		resourceData.setData(data);
 		
 		list.add(resourceData);
 		
@@ -80,10 +87,14 @@ public class Library {
 	 */
 	public void removeAll(ObservableList<ResourceData> selectedItems) {
 		
+		java.util.List<ResourceData> list=new ArrayList<>();
 		for (ResourceData resourceData : selectedItems) {
+			list.add(resourceData);
+		}
+		for (ResourceData resourceData : list) {
+			
 			remove(resourceData);
 		}
-		
 	}
 
 	private void remove(ResourceData resourceData) {
@@ -200,7 +211,7 @@ public class Library {
 
 
 
-	public void outputToFile(File file) {
+	public void outputToFileXLH(File file) {
 		
 		//arraylist 才可以序列化 
 		ArrayList<ResourceData> resourceDatas=new ArrayList<>(getResources());
@@ -212,9 +223,38 @@ public class Library {
 
 
 
-	public void inputFromFile(File file) {
+	public void inputFromFileXLH(File file) {
 		ArrayList<ResourceData> resourceDatas=new SerializaParser(file).toList();
 		this.list.addAll(resourceDatas);
+		
+	}
+
+
+
+	public void inputFromFileGson(File file) {
+		
+		ArrayList<ResourceData> resourceDatas = null;
+		try {
+			resourceDatas = new GsonParser(file).toList();
+		} catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.list.addAll(resourceDatas);
+		
+	}
+
+
+
+	public void outputToFileGson(File file) {
+		
+		ArrayList<ResourceData> resourceDatas=new ArrayList<>(getResources());
+		try {
+			new GsonOutput(resourceDatas,file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

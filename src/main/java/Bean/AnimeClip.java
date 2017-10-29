@@ -60,7 +60,7 @@ public class AnimeClip implements Externalizable {
 		if (frames.size() == 0 && index != 1) {
 			throw new RuntimeException("the first inserted frame must set index 1");
 		}
-		Frame frame = new Frame(this, index, texture);
+		Frame frame = new Frame( index, texture);
 		frames.add(frame);
 		frames.sort(Comparator.comparing(a -> frame.index));
 	}
