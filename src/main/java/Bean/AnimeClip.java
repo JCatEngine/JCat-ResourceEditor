@@ -4,7 +4,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.Comparator;
 
 import javafx.collections.FXCollections;
@@ -43,7 +42,7 @@ public class AnimeClip implements Externalizable {
 	/**
 	 * frames
 	 */
-	private ObservableList<Frame> frames = FXCollections.observableArrayList();
+	private transient ObservableList<Frame> frames = FXCollections.observableArrayList();
 
 	/**
 	 * insert one frame,the first frame must set index 1!

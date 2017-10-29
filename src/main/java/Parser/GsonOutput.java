@@ -20,6 +20,8 @@ public class GsonOutput extends BaseOutput{
 		GsonBuilder gsonBuilder=new GsonBuilder();
 		//gsonBuilder.registerTypeAdapter(ResourceData.class, new GsonAdapter());
 		gsonBuilder.registerTypeAdapter(Image.class, new GsonImage());
+		//Type type=new TypeToken<ObservableList<Frame>>(){}.getType();
+		//gsonBuilder.registerTypeAdapter(type, new GsonList());
 		Gson gson=gsonBuilder.create();
 		String string=gson.toJson(resourceDatas);
 		

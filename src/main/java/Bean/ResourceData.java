@@ -15,7 +15,7 @@ import Manager.ResourceType;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
-public class ResourceData  implements Externalizable{
+public class ResourceData implements Externalizable{
 
 	public String name;
 	public ResourceType type;
