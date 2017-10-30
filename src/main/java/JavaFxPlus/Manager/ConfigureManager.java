@@ -2,7 +2,7 @@ package JavaFxPlus.Manager;
 
 import java.io.File;
 
-import org.json.JSONObject;
+import com.google.gson.Gson;
 
 import JavaFxPlus.Tool.FileTool;
 import Main.Config;
@@ -40,15 +40,27 @@ public class ConfigureManager {
 	
 	
 	
-	/**
-	 * lastChoosePath 
-	 */
-	private File lastChoosePath;
-	/**
-	 * lastSavePath
-	 */
-	private File lastSavePath;
+	
+	private class ConfigData
+	{
 
+		/**
+		 * lastChoosePath 
+		 */
+		private String lastChoosePath;
+		/**
+		 * lastSavePath
+		 */
+		private String lastSavePath;
+		
+		
+	}
+
+	private ConfigData configData=new ConfigData();
+	
+	
+	
+	
 	public ConfigureManager() {
 		loadConfigure();
 	}
@@ -59,64 +71,64 @@ public class ConfigureManager {
 		if(file.exists())
 		{
 			String result=FileTool.readFile(file);
-			JSONObject jsonObject=new JSONObject(result);
-			_parseJson(jsonObject);
+			Gson gson=new Gson();
+			this.configData=gson.fromJson(result, ConfigData.class);
+		
+			
+			
 		}
+	
 	}
 	
-	private void _parseJson(JSONObject jsonObject) {
 	
-		
-		try {
-			this.lastChoosePath=new File(jsonObject.getString("lastChoosePath"));
-		} catch (Exception e) {
-		}
-		
-		try {
-			this.lastSavePath=new File(jsonObject.getString("lastSavePath"));
-		} catch (Exception e) {
-		}
-		
-		
-	}
 
 	
 
 	public void saveConfigure() {
 		
-		JSONObject jsonObject=new JSONObject();
-		jsonObject.put("lastChoosePath", lastChoosePath.getAbsolutePath());
-		jsonObject.put("lastSavePath", lastSavePath.getAbsolutePath());
+		Gson gson=new Gson();
+		String json=gson.toJson(this.configData);
 		
-		_outputJson(jsonObject);
+		
+		FileTool.writeFile(new File(Config.CONFIGUE),json);
 		
 	}
 
-	private void _outputJson(JSONObject jsonObject) {
-		
-		FileTool.writeFile(new File(Config.CONFIGUE), jsonObject.toString());
-		
-	}
+
 
 	
 	
 	public File getLastChoosePath() {
-		// TODO Auto-generated method stub
-		return lastChoosePath;
+		
+		if(configData.lastChoosePath!=null)
+		{
+			return new File(configData.lastChoosePath);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public void setLastChoosePath(File file) {
-		this.lastChoosePath=file;
+		this.configData.lastChoosePath=file.getAbsolutePath();
 		saveConfigure();
 		
 	}
 
 	public File getLastSavePath() {
-		return lastSavePath;
+		if(configData.lastSavePath!=null)
+		{
+			return new File(configData.lastSavePath);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public void setLastSavePath(File lastSavePath) {
-		this.lastSavePath = lastSavePath;
+		this.configData.lastSavePath = lastSavePath.getAbsolutePath();
 		saveConfigure();
 	}
 
