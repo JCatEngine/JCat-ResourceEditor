@@ -16,7 +16,7 @@ public abstract class BaseController {
 	protected ConfigureManager getConfigureManager()
 	{
 		
-		return ConfigureManager.getInstance();
+		return ConfigureManager.INSTANCE;
 				
 	}
 	

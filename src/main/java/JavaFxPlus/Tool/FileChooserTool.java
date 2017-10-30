@@ -21,8 +21,8 @@ public class FileChooserTool {
 	public static List<File> openMultipleDialog(String title, ArrayList<ExtensionFilter> arrayList, Stage stage) {
 		FileChooser fileChooser = _fileChooser(title, arrayList);
 		// set init directory
-		if (ConfigureManager.getInstance().getLastChoosePath() != null) {
-			fileChooser.setInitialDirectory(ConfigureManager.getInstance().getLastChoosePath());
+		if (ConfigureManager.INSTANCE.getLastChoosePath() != null) {
+			fileChooser.setInitialDirectory(ConfigureManager.INSTANCE.getLastChoosePath());
 		}
 		List<File> files = fileChooser.showOpenMultipleDialog(stage);
 
@@ -30,7 +30,7 @@ public class FileChooserTool {
 		if (files != null && files.size() > 0) {
 			File file = files.get(0);
 			if (!file.isDirectory()) {
-				ConfigureManager.getInstance().setLastChoosePath(file.getParentFile());
+				ConfigureManager.INSTANCE.setLastChoosePath(file.getParentFile());
 			}
 
 		}
@@ -78,7 +78,7 @@ public class FileChooserTool {
 	 */
 	private static ConfigureManager getConfigureManager() {
 		// TODO Auto-generated method stub
-		return ConfigureManager.getInstance();
+		return ConfigureManager.INSTANCE;
 	}
 
 	/**
