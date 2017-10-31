@@ -11,10 +11,12 @@ import java.util.ResourceBundle;
 import Bean.AnimeClip;
 import Bean.ResourceData;
 import Cell.LibraryCell;
+import JavaFxPlus.Tool.AlertTool;
 import JavaFxPlus.Tool.FileChooserTool;
 import JavaFxPlus.ViewHelper.CanvasHelper;
 import JavaFxPlus.ViewHelper.ImageViewHelper;
 import JavaFxPlus.ViewHelper.ListViewHelper;
+import Manager.Library;
 import Manager.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,6 +42,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import rx.Observable;
+import rx.Observable.OnSubscribe;
+import rx.Observer;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.functions.Action1;
+import rx.observers.Observers;
+import rx.schedulers.Schedulers;
 
 /**
  * deal with the main command,and load sub pane
@@ -348,11 +358,16 @@ public class MainController extends BaseController implements Initializable{
 	 * import image to library
 	 * @param event
 	 */
+	@SuppressWarnings("deprecation")
 	@FXML public void press_ImportImage(ActionEvent event) {
 		
 		ArrayList<ExtensionFilter> arrayList=new ArrayList<>();
 		arrayList.add(new FileChooser.ExtensionFilter("All Images", "*.jpg","*.png","*.jpeg"));
 		List<File> files=FileChooserTool.openMultipleDialog("选择图片",arrayList,stage);
+
+		
+		
+		
 		if(files!=null&&files.size()>0)
 		{
 			for (File file : files) {

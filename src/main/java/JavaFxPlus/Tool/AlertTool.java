@@ -14,6 +14,8 @@ public class AlertTool {
 	}
 	
 	public static void showSimpleAlert(String title, String content) {
+
+
 		
 		if(!alert.isShowing())
 		{
