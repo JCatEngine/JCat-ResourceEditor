@@ -10,7 +10,7 @@ public abstract class BaseController {
 	protected Library getLibrary()
 	{
 		
-		return Library.getInstance();
+		return Library.INSTANCE;
 				
 	}
 	protected ConfigureManager getConfigureManager()
@@ -23,7 +23,7 @@ public abstract class BaseController {
 	protected ImageManager getImageManager()
 	{
 		
-		return ImageManager.getInstance();
+		return ImageManager.INSTANCE;
 				
 	}
 	

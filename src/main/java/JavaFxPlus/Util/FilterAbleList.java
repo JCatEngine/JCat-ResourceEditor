@@ -46,10 +46,7 @@ public class FilterAbleList<T> {
 		//fliter cache list,and add data to show List
 		List<T> list=cacheList.filtered(predicate);
 		showList.clear();
-		for (T t : list) {
-			showList.add(t);
-		}
-		
+		showList.addAll(list);
 		
 		return showList;
 	}

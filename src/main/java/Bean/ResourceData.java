@@ -30,11 +30,11 @@ public class ResourceData implements Externalizable{
 		String name="";
 		if(type==ResourceType.TEXTURE)
 		{
-			name=ImageManager.ICON_TEXTURE;
+			name= ImageManager.INSTANCE.getICON_TEXTURE();
 		}
 		else if(type==ResourceType.MOVIECLIP)
 		{
-			name=ImageManager.ICON_MOVIECLIP;
+			name= ImageManager.INSTANCE.getICON_MOVIECLIP();
 		}
 		
 		return name;

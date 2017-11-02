@@ -11,12 +11,10 @@ import java.util.ResourceBundle;
 import Bean.AnimeClip;
 import Bean.ResourceData;
 import Cell.LibraryCell;
-import JavaFxPlus.Tool.AlertTool;
 import JavaFxPlus.Tool.FileChooserTool;
 import JavaFxPlus.ViewHelper.CanvasHelper;
 import JavaFxPlus.ViewHelper.ImageViewHelper;
 import JavaFxPlus.ViewHelper.ListViewHelper;
-import Manager.Library;
 import Manager.ResourceType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -42,14 +40,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import rx.Observable;
-import rx.Observable.OnSubscribe;
-import rx.Observer;
-import rx.Scheduler;
-import rx.Subscriber;
-import rx.functions.Action1;
-import rx.observers.Observers;
-import rx.schedulers.Schedulers;
 
 /**
  * deal with the main command,and load sub pane
@@ -122,12 +112,8 @@ public class MainController extends BaseController implements Initializable{
 
 
 	private void initSearchInput() {
-		this.inputTF.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				getLibrary().fliterResource(inputTF.getText());
-			}
-		});
+		this.inputTF.textProperty()
+		.addListener((observable, oldValue, newValue) -> getLibrary().fliterResource(inputTF.getText()));
 		
 	}
 

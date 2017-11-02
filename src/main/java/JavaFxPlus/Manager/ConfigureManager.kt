@@ -1,11 +1,10 @@
 package JavaFxPlus.Manager
 
-import java.io.File
-
-import com.google.gson.Gson
-
+import JavaFxPlus.KotlinEx.*
 import JavaFxPlus.Tool.FileTool
 import Main.Config
+import com.google.gson.Gson
+import java.io.File
 
 /**
  * configureManager
@@ -18,45 +17,23 @@ object ConfigureManager {
 
     init {
         //init directory
-        val file = File("data")
-        if (!file.exists()) {
-            file.mkdirs()
-        }
 
+        "data".toFile().ifNotExist { it.mkdirs() }
         loadConfigure()
     }
 
-    fun loadConfigure() {
-
-
-        val file = File(Config.CONFIGUE)
-        if (file.exists()) {
-            val result = FileTool.readFile(file)
-            val gson = Gson()
-            this.configData = gson.fromJson<ConfigData>(result, configData.javaClass)
-            
-
-        }
-
+    fun loadConfigure() = Config.CONFIGUE.toFile().ifExist {
+        val result = it.read()
+        this.configData = Gson().fromJson(result, configData.javaClass)
     }
 
 
-    fun saveConfigure() {
-
-        val gson = Gson()
-        val json = gson.toJson(this.configData)
-
-        FileTool.writeFile(File(Config.CONFIGUE), json)
-
-    }
+    fun saveConfigure() = Config.CONFIGUE.toFile() write  Gson().toJson(this.configData)
 
 
     var lastChoosePath: File?
-        get() = if (configData.lastChoosePath != null) {
-             File(configData.lastChoosePath)
-        } else {
-             null
-        }
+        get() = configData.lastChoosePath?.toFile()
+
         set(file) {
             this.configData.lastChoosePath = file?.getAbsolutePath()
             saveConfigure()
@@ -64,11 +41,8 @@ object ConfigureManager {
         }
 
     var lastSavePath: File?
-        get() = if (configData.lastSavePath != null) {
-             File(configData.lastSavePath)
-        } else {
-             null
-        }
+        get() = configData.lastSavePath?.toFile()
+
         set(lastSavePath) {
             this.configData.lastSavePath = lastSavePath?.getAbsolutePath()
             saveConfigure()

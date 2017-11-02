@@ -59,8 +59,9 @@ public class LibraryCell extends GetAbleListCell<ResourceData>{
 		{
 			if(isEditing())
 			{
+
 				HBox hBox=(HBox) FxmlTool.loadFxml("item_library_edit", this);
-				typeLV.setImage(ImageManager.getInstance().getIcon(item.getImageName()));
+				typeLV.setImage(ImageManager.INSTANCE.getIcon(item.getImageName()));
 				nameTF.setOnAction(new EventHandler<ActionEvent>() {
 					
 					@Override
@@ -77,7 +78,7 @@ public class LibraryCell extends GetAbleListCell<ResourceData>{
 				this.focusedProperty().removeListener(changeListener);
 				HBox hBox=(HBox) FxmlTool.loadFxml("item_library", this);
 				nameLB.setText(item.name);
-				typeLV.setImage(ImageManager.getInstance().getIcon(item.getImageName()));
+				typeLV.setImage(ImageManager.INSTANCE.getIcon(item.getImageName()));
 				setGraphic(hBox);
 			}
 			
@@ -109,7 +110,7 @@ public class LibraryCell extends GetAbleListCell<ResourceData>{
 		}
 		else
 		{
-			return !Library.getInstance().hasSameName(name);
+			return !Library.INSTANCE.hasSameName(name);
 		}
 	}
 
