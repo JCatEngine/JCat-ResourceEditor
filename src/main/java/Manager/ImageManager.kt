@@ -2,6 +2,7 @@ package Manager
 
 import JavaFxPlus.KotlinEx.toFile
 import Main.Config
+import com.google.common.collect.ImmutableMap
 import javafx.scene.image.Image
 import java.net.MalformedURLException
 
@@ -17,21 +18,27 @@ object ImageManager {
     val ICON_MUSIC = "icon_music"
 
 
-    private val map = HashMap<String, Image>()
+    private var map:ImmutableMap<String,Image>;
+
+
 
     init {
-        loadImage()
+
+        val map=HashMap<String,Image>()
+
+
+        _loadImage(ICON_TEXTURE,map)
+        _loadImage(ICON_MOVIECLIP,map)
+        _loadImage(ICON_MUSIC,map)
+
+        //make it immutablemap
+        this.map= ImmutableMap.copyOf(map)
+
 
     }
 
 
-    private fun loadImage() {
-        _loadImage(ICON_TEXTURE)
-        _loadImage(ICON_MOVIECLIP)
-        _loadImage(ICON_MUSIC)
-    }
-
-    private fun _loadImage(name: String) {
+    private fun _loadImage(name: String, map: HashMap<String, Image>) {
 
         try {
 
