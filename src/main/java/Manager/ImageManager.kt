@@ -2,9 +2,12 @@ package Manager
 
 import JavaFxPlus.KotlinEx.toFile
 import Main.Config
-import com.google.common.collect.ImmutableMap
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
+import com.google.common.cache.RemovalNotification
 import javafx.scene.image.Image
-import java.net.MalformedURLException
+import java.util.concurrent.TimeUnit
+
 
 /**
  * the class is for cache icon
@@ -18,39 +21,41 @@ object ImageManager {
     val ICON_MUSIC = "icon_music"
 
 
-    private var map:ImmutableMap<String,Image>;
+    /**
+     * cache
+     */
+    private val map = CacheBuilder.newBuilder()
+            .maximumSize(1000)
+            .expireAfterAccess(10, TimeUnit.MINUTES)
+            .removalListener<String, Image>(this::logReason)
+            .build(createLoader({key->_loadImage(key)}))
 
+    private fun<T,V> createLoader(func:(T)->V): CacheLoader<T,V> {
 
-
-    init {
-
-        val map=HashMap<String,Image>()
-
-
-        _loadImage(ICON_TEXTURE,map)
-        _loadImage(ICON_MOVIECLIP,map)
-        _loadImage(ICON_MUSIC,map)
-
-        //make it immutablemap
-        this.map= ImmutableMap.copyOf(map)
-
-
-    }
-
-
-    private fun _loadImage(name: String, map: HashMap<String, Image>) {
-
-        try {
-
-            val image=Image((Config.IMAGE_DIRECTORY + name + ".png").toFile().toURL().toString())
-            //System.out.println(new File(Config.IMAGE_DIRECTORY+name+".png").toURL().toString());
-            map.put(name,image)
-        } catch (e: MalformedURLException) {
-            // TODO Auto-generated catch block
-            e.printStackTrace()
+        return  object:CacheLoader<T, V>() {
+            @Throws(Exception::class)
+            override fun load(key: T): V {
+                return func(key)
+            }
         }
+    }
+
+
+
+
+    private fun logReason(it: RemovalNotification<String, Image>) {
+        val str="cause:${it.cause} key:${it.key} value:${it.value}"
+        println(str)
+        //record to log file
 
     }
+
+
+    /**
+     * load image by file path
+     */
+    private fun _loadImage(name: String)= Image((Config.IMAGE_DIRECTORY + name + ".png").toFile().toURL().toString())
+
 
 
     fun getIcon(name: String): Image {
